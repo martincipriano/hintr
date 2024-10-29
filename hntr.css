@@ -6,3 +6,7 @@ ul.hntr {
   padding: 0;
   width: 100%;
 }
+
+ul.hntr.show {
+  display: block;
+}
