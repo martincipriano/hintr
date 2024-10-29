@@ -24,8 +24,31 @@ window.hntr.init = function() {
     input.parentNode.insertBefore(element, input.nextSibling)
 
     // temporarily add a list item to the unordered list
-    element.innerHTML = '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
+    element.innerHTML = '<li><a href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
   })
+}
+
+window.hntr.showSuggestions = function(e) {
+
+  // Get the input element
+  let input = e.currentTarget
+
+  // Get the hntr list element
+  let list = input.nextElementSibling
+
+  // Check if there are 3 or more characters in the input
+  if (input.value.length >= 3) {
+
+    // If the suggestions hasn't been shown yet
+    // Add the class show to the list element
+    if (list.classList.contains('show') === false) {
+      list.classList.add('show')
+    }
+  } else {
+
+    // Otherwise, remove the class show from the list element
+    list.classList.remove('show')
+  }
 }
 
 window.hntr.eventListeners = function() {
@@ -37,18 +60,7 @@ window.hntr.eventListeners = function() {
   inputs.forEach(input => {
 
     // Listen to the keyup event
-    input.addEventListener('keyup', function() {
-
-      // Get the hntr list element
-      let list = input.nextElementSibling
-
-      // Check if there are 3 or more characters in the input
-      if (input.value.length >= 3 && list.classList.contains('show') === false) {
-
-        // Add the class show to the list element
-        list.classList.add('show')
-      }
-    })
+    input.addEventListener('keyup', window.hntr.showSuggestions)
   })
 }
 
