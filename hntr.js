@@ -3,13 +3,15 @@ window.hntr = {}
 window.hntr.init = function() {
 
   // Get all inputs with data-hntr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"]')
+  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"], [type="search"][data-hntr="true"]')
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
 
     // Create am unordered list
     let element = document.createElement('ul')
+
+    console.log(element)
 
     // Add a class to the unordered list
     element.classList.add('hntr')
@@ -22,7 +24,7 @@ window.hntr.init = function() {
 window.hntr.eventListeners = function() {
 
   // Get all inputs with data-hntr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"]')
+  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"], [type="search"][data-hntr="true"]')
 
   // Add an event listener to each input element
   inputs.forEach(input => {
@@ -35,6 +37,9 @@ window.hntr.eventListeners = function() {
 
       // Check if there are 3 or more characters in the input
       if (input.value.length >= 3 && list.classList.contains('show') === false) {
+
+        // Add the class show to the list element
+        list.classList.add('show')
       }
     })
   })
