@@ -7,7 +7,6 @@
  * Version: 0.0.1
  */
 
-
 if (!function_exists('hntr_enqueue_scripts')) {
   add_action('wp_enqueue_scripts', 'hntr_enqueue_scripts');
   function hntr_enqueue_scripts() {
