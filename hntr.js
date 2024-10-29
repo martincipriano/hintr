@@ -7,10 +7,14 @@ window.hntr.init = function() {
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
+
+    // Create am unordered list
     let element = document.createElement('ul')
 
+    // Add a class to the unordered list
     element.classList.add('hntr')
 
+    // Add the unordered list after the input element
     input.parentNode.insertBefore(element, input.nextSibling)
   })
 }
