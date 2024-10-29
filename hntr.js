@@ -7,7 +7,7 @@ window.hntr.init = function() {
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
-    let element = document.createElement('div')
+    let element = document.createElement('ul')
 
     element.classList.add('hntr')
 
