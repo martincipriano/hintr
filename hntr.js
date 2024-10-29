@@ -10,14 +10,21 @@ window.hntr.init = function() {
 
     // Create am unordered list
     let element = document.createElement('ul')
-
-    console.log(element)
+    let rect = input.getBoundingClientRect()
 
     // Add a class to the unordered list
     element.classList.add('hntr')
 
+    // Add the top and left position of the input to the top and left position of the unordered list
+    element.style.top = rect.top + input.offsetHeight + 'px'
+    element.style.left = rect.left + 'px'
+    element.style.width = input.offsetWidth + 'px'
+
     // Add the unordered list after the input element
     input.parentNode.insertBefore(element, input.nextSibling)
+
+    // temporarily add a list item to the unordered list
+    element.innerHTML = '<li>Item 1</li><li>Item 2</li><li>Item 3</li>'
   })
 }
 
