@@ -44,11 +44,17 @@ window.hntr.showSuggestions = function(e) {
     if (list.classList.contains('show') === false) {
       list.classList.add('show')
     }
-  } else {
-
-    // Otherwise, remove the class show from the list element
-    list.classList.remove('show')
   }
+}
+
+window.hntr.hideSuggestions = function(e) {
+  // Get the input element
+  let input = e.currentTarget
+
+  // Get the hntr list element
+  let list = input.nextElementSibling
+
+  list.classList.remove('show')
 }
 
 window.hntr.eventListeners = function() {
@@ -61,6 +67,19 @@ window.hntr.eventListeners = function() {
 
     // Listen to the keyup event
     input.addEventListener('keyup', window.hntr.showSuggestions)
+
+    // Listen to the focusout event
+    // input.addEventListener('blur', window.hntr.hideSuggestions)
+
+    // Add an event listener that listens to the click event outside of the input element and the suggestions list
+    document.addEventListener('click', function(e) {
+
+      console.log(e.target)
+
+      if (input !== e.target && input.nextElementSibling !== e.target) {
+        input.nextElementSibling.classList.remove('show')
+      }
+    })
   })
 }
 
