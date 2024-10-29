@@ -3,7 +3,7 @@ window.hntr = {}
 window.hntr.init = function() {
 
   // Get all inputs with data-hntr="true"
-  let inputs = document.querySelectorAll('[data-hntr="true"]')
+  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"]')
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
@@ -20,7 +20,10 @@ window.hntr.init = function() {
 }
 
 window.hntr.eventListeners = function() {
-  
+
+  // Get all inputs with data-hntr="true"
+  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"]')
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
