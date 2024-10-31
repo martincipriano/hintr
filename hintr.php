@@ -9,13 +9,13 @@
 
 /**
  * Initialize the plugin.
- * 
+ *
  * This function is called when WordPress is initialized.
  * If an upload and hintr directory does not exist, create them.
  * If a JSON file for a post type does not exist, create it.
- * 
+ *
  * @return void
- * 
+ *
  * @since 0.0.1
  */
 if (!function_exists('hintr_init')) {
@@ -46,10 +46,10 @@ if (!function_exists('hintr_init')) {
 
 /**
  * Create a JSON file for a post type.
- * 
+ *
  * This function creates a JSON file for a post type.
  * The JSON file contains the ID, post type, title, and URL of each post.
- * 
+ *
  * @param string $post_type The post type to create the JSON file for.
  * @return void
  * @since 0.0.1
@@ -75,10 +75,10 @@ if (!function_exists('hintr_create_json')) {
 
 /**
  * Update the JSON file for a post.
- * 
+ *
  * This function updates the JSON file for a post.
  * The JSON file contains the ID, post type, title, and URL of each post.
- * 
+ *
  * @param WP_Post $post The post to update the JSON file for.
  * @return void
  * @since 0.0.1
@@ -95,10 +95,10 @@ if (!function_exists('hintr_update_json_post')) {
 
 /**
  * Delete the JSON file for a post.
- * 
+ *
  * This function deletes the JSON file for a post.
  * The JSON file contains the ID, post type, title, and URL of each post.
- * 
+ *
  * @param WP_Post $post The post to delete the JSON file for.
  * @return void
  * @since 0.0.1
@@ -114,12 +114,12 @@ if (!function_exists('hintr_delete_json_post')) {
 
 /**
  * Enqueue the plugin scripts and styles.
- * 
+ *
  * This function is called when WordPress enqueues scripts and styles.
  * Enqueue the hintr.css and hintr.js files.
- * 
+ *
  * @return void
- * 
+ *
  * @since 0.0.1
  */
 if (!function_exists('hintr_enqueue_scripts')) {
@@ -127,5 +127,47 @@ if (!function_exists('hintr_enqueue_scripts')) {
   function hintr_enqueue_scripts() {
     wp_enqueue_style('hintr', plugin_dir_url(__FILE__) . 'hintr.css', [], filemtime(plugin_dir_path(__FILE__) . 'hintr.css'));
     wp_enqueue_script('hintr', plugin_dir_url(__FILE__) . 'hintr.js', ['jquery'], filemtime(plugin_dir_path(__FILE__) . 'hintr.js'), true);
+  }
+}
+
+/**
+ * Save the post.
+ *
+ * This function is called when a post is saved.
+ * If the post status is publish, update the JSON file for the post.
+ * If the post status is not publish, delete the JSON file for the post.
+ *
+ * @param int $post_id The ID of the post.
+ * @param WP_Post $post The post object.
+ * @return void
+ *
+ * @since 0.0.1
+ */
+if (!function_exists('hintr_save_post')) {
+  add_action('save_post', 'hintr_save_post', 10, 2);
+  function hintr_save_post($post_id, $post) {
+    if ($post->post_status === 'publish') {
+      hintr_update_json_post($post);
+    } else {
+      hintr_delete_json_post($post);
+    }
+  }
+}
+
+/**
+ * Delete the post.
+ *
+ * This function is called when a post is deleted.
+ * Delete the JSON file for the post.
+ *
+ * @param WP_Post $post The post object.
+ * @return void
+ *
+ * @since 0.0.1
+ */
+if (!function_exists('hintr_delete_post')) {
+  add_action('delete_post', 'hintr_delete_post');
+  function hintr_delete_post($post) {
+    hintr_delete_json_post($post);
   }
 }
