@@ -8,21 +8,29 @@
  */
 
 /**
- * Activate the plugin.
+ * Initialize the plugin.
  * 
- * This function is called when the plugin is activated.
+ * This function is called when WordPress is initialized.
  * It checks if the uploads directory exists and is writable.
- * If it does not exist or is not writable, it displays an error message.
+ * Create the uploads directory if it does not exist.
+ * If the uploads directory is not writable, change the permissions to 0755.
+ * Create the hintr directory in the uploads directory if it does not exist.
  * 
  * @return void
  * 
  * @since 0.0.1
  */
-if (!function_exists('hintr_activate')) {
-  register_activation_hook(__FILE__, 'hintr_activate');
-  function hintr_activate() {
-    if (!wp_mkdir_p(ABSPATH . 'wp-content/uploads/hintr') || !is_writable(ABSPATH . 'wp-content/uploads/hintr')) {
-      wp_die('The plugin needs an upload directory at wp-content/uploads/hintr that is writable.');
+if (!function_exists('hintr_init')) {
+  add_action('init', 'hintr_init');
+  function hintr_init() {
+    if (!file_exists(ABSPATH . 'wp-content/uploads')) {
+      wp_mkdir_p(ABSPATH . 'wp-content/uploads');
+    }
+    if (!is_writable(ABSPATH . 'wp-content/uploads')) {
+      chmod(ABSPATH . 'wp-content/uploads', 0755);
+    }
+    if (!file_exists(ABSPATH . 'wp-content/uploads/hintr')) {
+      wp_mkdir_p(ABSPATH . 'wp-content/uploads/hintr');
     }
   }
 }
