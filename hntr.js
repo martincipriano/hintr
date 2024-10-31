@@ -24,11 +24,11 @@ window.hntr.init = function() {
     input.parentNode.insertBefore(element, input.nextSibling)
 
     // temporarily add a list item to the unordered list
-    element.innerHTML = '<li><a href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
+    element.innerHTML = '<li><a class="hntr-nav-item" href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
   })
 }
 
-window.hntr.showSuggestions = function(e) {
+window.hntr.toggleSuggestions = function(e) {
 
   // Get the input element
   let input = e.currentTarget
@@ -36,14 +36,18 @@ window.hntr.showSuggestions = function(e) {
   // Get the hntr list element
   let list = input.nextElementSibling
 
-  // Check if there are 3 or more characters in the input
-  if (input.value.length >= 3) {
+  // Add the class "show" if there are 3 or more characters in the input
+  if (input.value.length > 3) {
 
     // If the suggestions hasn't been shown yet
     // Add the class show to the list element
     if (list.classList.contains('show') === false) {
       list.classList.add('show')
     }
+
+  // Remove the class "show" if there are less than 3 characters in the input
+  } else {
+    list.classList.remove('show')
   }
 }
 
@@ -66,7 +70,7 @@ window.hntr.eventListeners = function() {
   inputs.forEach(input => {
 
     // Listen to the keyup event
-    input.addEventListener('keyup', window.hntr.showSuggestions)
+    input.addEventListener('keyup', window.hntr.toggleSuggestions)
 
     // Listen to the focusout event
     // input.addEventListener('blur', window.hntr.hideSuggestions)
