@@ -23,14 +23,24 @@
 if (!function_exists('hintr_init')) {
   add_action('init', 'hintr_init');
   function hintr_init() {
+
     if (!file_exists(ABSPATH . 'wp-content/uploads')) {
       wp_mkdir_p(ABSPATH . 'wp-content/uploads');
     }
+
     if (!is_writable(ABSPATH . 'wp-content/uploads')) {
       chmod(ABSPATH . 'wp-content/uploads', 0755);
     }
+
     if (!file_exists(ABSPATH . 'wp-content/uploads/hintr')) {
       wp_mkdir_p(ABSPATH . 'wp-content/uploads/hintr');
+    }
+
+    $post_types = get_post_types(['exclude_from_search' => false], 'names');
+    foreach ($post_types as $post_type) {
+      if (!file_exists(ABSPATH . 'wp-content/uploads/hintr/' . $post_type->name . '.json')) {
+        file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type->name . '.json', json_encode([]));
+      }
     }
   }
 }
