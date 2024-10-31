@@ -35,6 +35,10 @@ if (!function_exists('hintr_init')) {
     }
 
     $post_types = get_post_types(['exclude_from_search' => false], 'names');
+
+    unset($post_types['revision']);
+    unset($post_types['attachment']);
+
     foreach ($post_types as $post_type) {
       if (!file_exists(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json')) {
         file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json', json_encode([]));
