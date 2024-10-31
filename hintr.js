@@ -1,9 +1,9 @@
-window.hntr = {}
+window.hintr = {}
 
-window.hntr.init = function() {
+window.hintr.init = function() {
 
-  // Get all inputs with data-hntr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"], [type="search"][data-hntr="true"]')
+  // Get all inputs with data-hintr="true"
+  let inputs = document.querySelectorAll('[type="text"][data-hintr="true"], [type="search"][data-hintr="true"]')
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
@@ -13,7 +13,7 @@ window.hntr.init = function() {
     let rect = input.getBoundingClientRect()
 
     // Add a class to the unordered list
-    element.classList.add('hntr')
+    element.classList.add('hintr')
 
     // Add the top and left position of the input to the top and left position of the unordered list
     element.style.top = rect.top + input.offsetHeight + 'px'
@@ -24,16 +24,16 @@ window.hntr.init = function() {
     input.parentNode.insertBefore(element, input.nextSibling)
 
     // temporarily add a list item to the unordered list
-    element.innerHTML = '<li><a class="hntr-nav-item" href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
+    element.innerHTML = '<li><a class="hintr-nav-item" href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
   })
 }
 
-window.hntr.toggleSuggestions = function(e) {
+window.hintr.toggleSuggestions = function(e) {
 
   // Get the input element
   let input = e.currentTarget
 
-  // Get the hntr list element
+  // Get the hintr list element
   let list = input.nextElementSibling
 
   // Add the class "show" if there are 3 or more characters in the input
@@ -51,29 +51,29 @@ window.hntr.toggleSuggestions = function(e) {
   }
 }
 
-window.hntr.hideSuggestions = function(e) {
+window.hintr.hideSuggestions = function(e) {
   // Get the input element
   let input = e.currentTarget
 
-  // Get the hntr list element
+  // Get the hintr list element
   let list = input.nextElementSibling
 
   list.classList.remove('show')
 }
 
-window.hntr.eventListeners = function() {
+window.hintr.eventListeners = function() {
 
-  // Get all inputs with data-hntr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hntr="true"], [type="search"][data-hntr="true"]')
+  // Get all inputs with data-hintr="true"
+  let inputs = document.querySelectorAll('[type="text"][data-hintr="true"], [type="search"][data-hintr="true"]')
 
   // Add an event listener to each input element
   inputs.forEach(input => {
 
     // Listen to the keyup event
-    input.addEventListener('keyup', window.hntr.toggleSuggestions)
+    input.addEventListener('keyup', window.hintr.toggleSuggestions)
 
     // Listen to the focusout event
-    // input.addEventListener('blur', window.hntr.hideSuggestions)
+    // input.addEventListener('blur', window.hintr.hideSuggestions)
 
     // Add an event listener that listens to the click event outside of the input element and the suggestions list
     document.addEventListener('click', function(e) {
@@ -88,6 +88,6 @@ window.hntr.eventListeners = function() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  window.hntr.init()
-  window.hntr.eventListeners()
+  window.hintr.init()
+  window.hintr.eventListeners()
 })
