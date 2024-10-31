@@ -14,6 +14,9 @@ ul.hintr {
 ul.hintr.show {
   display: block;
 }
+ul.hintr:empty {
+  display: none;
+}
 ul.hintr li a {
   color: inherit;
   display: block;
