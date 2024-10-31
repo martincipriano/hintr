@@ -1,4 +1,4 @@
-ul.hntr {
+ul.hintr {
   background-color: white;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -11,10 +11,10 @@ ul.hntr {
   position: absolute;
   width: 100%;
 }
-ul.hntr.show {
+ul.hintr.show {
   display: block;
 }
-ul.hntr li a {
+ul.hintr li a {
   color: inherit;
   display: block;
   padding: 0.25rem .5rem;
