@@ -11,10 +11,8 @@
  * Initialize the plugin.
  * 
  * This function is called when WordPress is initialized.
- * It checks if the uploads directory exists and is writable.
- * Create the uploads directory if it does not exist.
- * If the uploads directory is not writable, change the permissions to 0755.
- * Create the hintr directory in the uploads directory if it does not exist.
+ * If an upload and hintr directory does not exist, create them.
+ * If a JSON file for a post type does not exist, create it.
  * 
  * @return void
  * 
@@ -38,10 +36,40 @@ if (!function_exists('hintr_init')) {
 
     $post_types = get_post_types(['exclude_from_search' => false], 'names');
     foreach ($post_types as $post_type) {
-      if (!file_exists(ABSPATH . 'wp-content/uploads/hintr/' . $post_type->name . '.json')) {
-        file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type->name . '.json', json_encode([]));
+      if (!file_exists(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json')) {
+        file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json', json_encode([]));
+        hintr_create_json($post_type);
       }
     }
+  }
+}
+
+/**
+ * Create a JSON file for a post type.
+ * 
+ * This function creates a JSON file for a post type.
+ * The JSON file contains the ID, post type, title, and URL of each post.
+ * 
+ * @param string $post_type The post type to create the JSON file for.
+ * @return void
+ * @since 0.0.1
+ */
+if (!function_exists('hintr_create_json')) {
+  function hintr_create_json($post_type) {
+    $posts_data = [];
+    $posts = get_posts([
+      'post_status' => 'publish',
+      'post_type' => $post_type,
+      'posts_per_page' => -1
+    ]);
+    foreach($posts as $post) {
+      $posts_data[$post->ID] = [
+        'post_type' => $post->post_type,
+        'title' => $post->post_title,
+        'url' => get_permalink($post)
+      ];
+    }
+    file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json', json_encode($posts_data));
   }
 }
 
