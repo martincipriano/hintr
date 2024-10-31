@@ -74,6 +74,27 @@ if (!function_exists('hintr_create_json')) {
 }
 
 /**
+ * Update the JSON file for a post.
+ * 
+ * This function updates the JSON file for a post.
+ * The JSON file contains the ID, post type, title, and URL of each post.
+ * 
+ * @param WP_Post $post The post to update the JSON file for.
+ * @return void
+ * @since 0.0.1
+ */
+if (!function_exists('hintr_update_json_post')) {
+  function hintr_update_json_post($post) {
+    $posts = json_decode(file_get_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post->post_type . '.json'), true);
+    $posts[$post->ID]['title'] = $post->post_title;
+    $posts[$post->ID]['url'] = get_permalink($post);
+
+    file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post->post_type . '.json', json_encode($posts));
+  }
+}
+
+
+/**
  * Enqueue the plugin scripts and styles.
  * 
  * This function is called when WordPress enqueues scripts and styles.
