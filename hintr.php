@@ -35,6 +35,16 @@ if (!function_exists('hintr_init')) {
   }
 }
 
+/**
+ * Enqueue the plugin scripts and styles.
+ * 
+ * This function is called when WordPress enqueues scripts and styles.
+ * Enqueue the hintr.css and hintr.js files.
+ * 
+ * @return void
+ * 
+ * @since 0.0.1
+ */
 if (!function_exists('hintr_enqueue_scripts')) {
   add_action('wp_enqueue_scripts', 'hintr_enqueue_scripts');
   function hintr_enqueue_scripts() {
