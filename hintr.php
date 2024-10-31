@@ -131,6 +131,10 @@ if (!function_exists('hintr_enqueue_scripts')) {
   function hintr_enqueue_scripts() {
     wp_enqueue_style('hintr', plugin_dir_url(__FILE__) . 'hintr.css', [], filemtime(plugin_dir_path(__FILE__) . 'hintr.css'));
     wp_enqueue_script('hintr', plugin_dir_url(__FILE__) . 'hintr.js', ['jquery'], filemtime(plugin_dir_path(__FILE__) . 'hintr.js'), true);
+    wp_localize_script('hintr', 'hintrData', [
+      'uploadDir' => wp_upload_dir()['baseurl'] . '/hintr/',
+      'hint' => '<li><a class="hintr-nav-item" href="url">title</a></li>'
+    ]);
   }
 }
 
