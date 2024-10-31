@@ -93,6 +93,24 @@ if (!function_exists('hintr_update_json_post')) {
   }
 }
 
+/**
+ * Delete the JSON file for a post.
+ * 
+ * This function deletes the JSON file for a post.
+ * The JSON file contains the ID, post type, title, and URL of each post.
+ * 
+ * @param WP_Post $post The post to delete the JSON file for.
+ * @return void
+ * @since 0.0.1
+ */
+if (!function_exists('hintr_delete_json_post')) {
+  function hintr_delete_json_post($post) {
+    $posts = json_decode(file_get_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post->post_type . '.json'), true);
+    unset($posts[$post->ID]);
+
+    file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post->post_type . '.json', json_encode($posts));
+  }
+}
 
 /**
  * Enqueue the plugin scripts and styles.
