@@ -22,9 +22,6 @@ window.hintr.init = function() {
 
     // Add the unordered list after the input element
     input.parentNode.insertBefore(element, input.nextSibling)
-
-    // temporarily add a list item to the unordered list
-    element.innerHTML = '<li><a class="hintr-nav-item" href="#">Item 1</a></li><li><a href="#">Item 2</a></li><li><a href="#">Item 3</a></li>'
   })
 }
 
@@ -44,6 +41,22 @@ window.hintr.toggleSuggestions = function(e) {
     if (list.classList.contains('show') === false) {
       list.classList.add('show')
     }
+
+    // Populate the list with suggestions
+    // Get the suggestions from the json file created by the php file
+    fetch(hintrData.uploadDir + 'page.json')
+      .then(response => response.json())
+      .then(data => {
+        list.innerHTML = ''
+
+        data = Object.values(data)
+        data = data.filter(item => item.title.toLowerCase().includes(input.value.toLowerCase()))
+        data.forEach(item => {
+          list.innerHTML += hintrData.hint
+            .replace('title', item.title)
+            .replace('url', item.url)
+        })
+      })
 
   // Remove the class "show" if there are less than 3 characters in the input
   } else {
