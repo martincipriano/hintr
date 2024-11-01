@@ -2,8 +2,8 @@ window.hintr = {}
 
 window.hintr.init = function() {
 
-  // Get all inputs with data-hintr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hintr="true"], [type="search"][data-hintr="true"]')
+  // Get all inputs with data-hintr
+  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr]')
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
@@ -76,8 +76,8 @@ window.hintr.hideSuggestions = function(e) {
 
 window.hintr.eventListeners = function() {
 
-  // Get all inputs with data-hintr="true"
-  let inputs = document.querySelectorAll('[type="text"][data-hintr="true"], [type="search"][data-hintr="true"]')
+  // Get all inputs with data-hintr
+  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr]')
 
   // Add an event listener to each input element
   inputs.forEach(input => {
