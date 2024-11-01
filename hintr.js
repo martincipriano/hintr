@@ -42,15 +42,27 @@ window.hintr.toggleSuggestions = function(e) {
       list.classList.add('show')
     }
 
-    // Populate the list with suggestions
-    // Get the suggestions from the json file created by the php file
-    fetch(hintrData.uploadDir + 'page.json')
-      .then(response => response.json())
-      .then(data => {
-        list.innerHTML = ''
+    // get the post types from the data-hintr attribute
+    let postTypes = input.getAttribute('data-hintr').split(',')
 
+    postTypes = postTypes.map(postType => postType.trim())
+
+    // Fetch and combine the post type json
+    let promises = postTypes.map(postType => {
+      return fetch(hintrData.uploadDir + postType + '.json')
+        .then(response => response.json())
+    })
+
+    Promise.all(promises)
+      .then(data => {
+        data = data.reduce((acc, innerObj) => {
+          return { ...acc, ...innerObj }
+        }, {})
         data = Object.values(data)
         data = data.filter(item => item.title.toLowerCase().includes(input.value.toLowerCase()))
+
+        list.innerHTML = ''
+
         data.forEach(item => {
           list.innerHTML += hintrData.hint
             .replace('title', item.title)
@@ -91,7 +103,6 @@ window.hintr.eventListeners = function() {
     // Add an event listener that listens to the click event outside of the input element and the suggestions list
     document.addEventListener('click', function(e) {
 
-      console.log(e.target)
 
       if (input !== e.target && input.nextElementSibling !== e.target) {
         input.nextElementSibling.classList.remove('show')
