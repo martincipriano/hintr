@@ -37,6 +37,7 @@ if (!function_exists('hintr_init')) {
     $post_types = get_post_types(['exclude_from_search' => false], 'names');
 
     unset($post_types['revision']);
+    unset($post_types['wp_global_styles']);
     unset($post_types['attachment']);
 
     foreach ($post_types as $post_type) {
@@ -154,6 +155,16 @@ if (!function_exists('hintr_enqueue_scripts')) {
 if (!function_exists('hintr_save_post')) {
   add_action('save_post', 'hintr_save_post', 10, 2);
   function hintr_save_post($post_id, $post) {
+
+    $validation = [
+      defined('DOING_AUTOSAVE') && DOING_AUTOSAVE,
+      $post->post_type === 'revision'
+    ];
+
+    if (in_array(false, $validation)) {
+      return;
+    }
+
     if ($post->post_status === 'publish') {
       hintr_update_json_post($post);
     } else {
