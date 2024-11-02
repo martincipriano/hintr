@@ -3,7 +3,7 @@ window.hintr = {}
 window.hintr.init = function() {
 
   // Get all inputs with data-hintr
-  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr]')
+  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
 
   // Add an element to the DOM for each input
   inputs.forEach(input => {
@@ -42,10 +42,15 @@ window.hintr.toggleSuggestions = function(e) {
       list.classList.add('show')
     }
 
-    // get the post types from the data-hintr attribute
-    let postTypes = input.getAttribute('data-hintr').split(',')
+    // Set defailt post types
+    // This should come from the settings
+    let postTypes = ['post', 'page']
 
-    postTypes = postTypes.map(postType => postType.trim())
+    // Get the post types from the data-hintr attribute
+    if (input.hasAttribute('data-hintr')) {
+      postTypes = input.getAttribute('data-hintr').split(',')
+      postTypes = postTypes.map(postType => postType.trim())
+    }
 
     // Fetch and combine the post type json
     let promises = postTypes.map(postType => {
@@ -89,7 +94,7 @@ window.hintr.hideSuggestions = function(e) {
 window.hintr.eventListeners = function() {
 
   // Get all inputs with data-hintr
-  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr]')
+  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
 
   // Add an event listener to each input element
   inputs.forEach(input => {
