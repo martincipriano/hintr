@@ -1,0 +1,21 @@
+.ss-main {
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+  padding: .3rem;
+}
+.ss-main .ss-values .ss-value {
+  align-items: initial;
+  background-color: #2271b1;
+  border-color: #2271b1;
+}
+.ss-main .ss-values .ss-value .ss-value-text,
+.ss-main .ss-values .ss-value .ss-value-delete {
+  align-items: center;
+  display: flex;
+  min-height: 24px;
+  padding: 0 10px;
+}
+.ss-main .ss-values .ss-value .ss-value-delete {
+  border-left: 1px solid rgba(255,255,255,.2);
+}
+
