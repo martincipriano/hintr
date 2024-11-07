@@ -19,3 +19,27 @@
   border-left: 1px solid rgba(255,255,255,.2);
 }
 
+.ss-content.ss-open-below {
+  border-color: #8c8f94;
+}
+.ss-content .ss-search input {
+  border: 1px solid #8c8f94;
+  border-radius: 4px;
+}
+.ss-content .ss-search input:focus {
+  box-shadow: none;
+}
+.ss-content .ss-list .ss-option {
+  margin-bottom: 1px;
+  padding: .5rem 1rem;
+}
+.ss-content .ss-list .ss-option.ss-highlighted,
+.ss-content .ss-list .ss-option:not(.ss-disabled).ss-selected,
+.ss-content .ss-list .ss-option:hover {
+  background-color: #2271b1;
+}
+
+.hintr-checkbox {
+  display: block;
+  margin-bottom: .3rem;
+}
