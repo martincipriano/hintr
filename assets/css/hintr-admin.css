@@ -49,16 +49,19 @@
 .hintr-checkboxes {
   display: flex;
   flex-wrap: wrap;
-  gap: .5rem 1rem;
+  max-width: 767px;
 }
 .hintr-checkbox {
+  box-sizing: border-box;
   cursor: pointer;
   display: block;
   margin-bottom: .5rem;
   overflow: hidden;
+  padding-right: 1rem;
   text-overflow: ellipsis;
   user-select: none;
   white-space: nowrap;
+  width: 50%;
 }
 .hintr-checkbox input {
   height: 1rem;
@@ -67,24 +70,4 @@
 .hintr-checkbox input:focus {
   box-shadow: none;
   outline: none;
-}
-@media (min-width: 640px) {
-  .hintr-checkbox {
-    width: 50%;
-  }
-}
-@media (min-width: 768px) {
-  .hintr-checkbox {
-    width: 33.3333%;
-  }
-}
-@media (min-width: 1024px) {
-  .hintr-checkbox {
-    width: 25%;
-  }
-}
-@media (min-width: 1280px) {
-  .hintr-checkbox {
-    width: 20%;
-  }
 }
