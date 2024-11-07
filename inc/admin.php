@@ -97,9 +97,9 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
     foreach($default_post_types as $post_type) {
       $meta_keys = hintr_get_post_type_metadata($post_type);
       if ($meta_keys) {
-        foreach ($meta_keys as $meta_key) {
-            echo $meta_key . '<br>';
-        }
+        foreach ($meta_keys as $meta_key) { ?>
+          <label class="hintr-checkbox" for="<?= $post_type . '-' . $meta_key ?>"><input id="<?= $post_type . '-' . $meta_key ?>" type="checkbox" value="<?= $meta_key ?>"><?= $meta_key ?></label>
+        <?php }
       } else {
         echo 'No meta keys found for this post type.';
       }
