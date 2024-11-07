@@ -50,7 +50,7 @@ if (!function_exists('hintr_register_settings')) {
   function hintr_register_settings() {
     register_setting('hintr_settings', 'hintr_settings', 'hintr_settings_validate');
     add_settings_section('hintr_settings', 'Search Keywords In', '', 'hintr');
-    add_settings_field('hintr_default_post_types', 'Post Types', 'hintr_settings_default_post_types', 'hintr', 'hintr_settings', [
+    add_settings_field('hintr_post_types', 'Post Types', 'hintr_settings_post_types', 'hintr', 'hintr_settings', [
       'description' => 'Select the default post types from which suggestions will be sourced.'
     ]);
     add_settings_field('hintr_default_post_metadata', 'Post Metadata', 'hintr_settings_default_post_metadata', 'hintr', 'hintr_settings', [
@@ -65,22 +65,16 @@ if (!function_exists('hintr_settings_validate')) {
   }
 }
 
-if (!function_exists('hintr_settings_default_post_types')) {
-  function hintr_settings_default_post_types($args) {
-    $default_post_types = ['post', 'page'];
-
+if (!function_exists('hintr_settings_post_types')) {
+  function hintr_settings_post_types($args) {
+    $available_post_types = get_post_types(['public' => true], 'objects');
     $hintr_settings = get_option('hintr_settings');
-    if ($hintr_settings) {
-      $default_post_types = $hintr_settings['default_post_types'] ?? [];
-    } ?>
+    $selected_post_types = $hintr_settings ? $hintr_settings['post_types'] : ['post', 'page']; ?>
 
-    <select id="hintr-default-post-types" name="hintr_settings[default_post_types][]" multiple>
-      <?php foreach ($default_post_types as $post_type): ?>
-        <?php if (post_type_exists($post_type)): ?>
-          <?php
-            $post_type_object = get_post_type_object($post_type);
-          ?>
-          <option value="<?= $post_type_object->name ?>" <?php selected(in_array($post_type_object->name, $default_post_types), true); ?>><?= $post_type_object->label ?></option>
+    <select id="hintr-default-post-types" name="hintr_settings[post_types][]" multiple>
+      <?php foreach ($available_post_types as $post_type): ?>
+        <?php if (isset($post_type)): ?>
+          <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $selected_post_types), true); ?>><?= $post_type->label ?></option>
         <?php endif; ?>
       <?php endforeach; ?>
     </select>
@@ -90,29 +84,35 @@ if (!function_exists('hintr_settings_default_post_types')) {
 
 if (!function_exists('hintr_settings_default_post_metadata')) {
   function hintr_settings_default_post_metadata($args) {
-    $default_post_types = ['post', 'page'];
+    $selected_post_types = ['post', 'page'];
 
     $hintr_settings = get_option('hintr_settings');
     if ($hintr_settings) {
-      $default_post_types = $hintr_settings['default_post_types'] ?? [];
+      $selected_post_types = $hintr_settings['post_types'] ?? [];
     }
 
-    foreach($default_post_types as $post_type) {
+    foreach($selected_post_types as $post_type) {
       if (post_type_exists($post_type)) {
         $post_type_object = get_post_type_object($post_type);
-        $meta_keys = hintr_get_post_type_metadata($post_type); ?>
+        $meta_keys = hintr_get_post_type_metadata($post_type);
+        $checked_meta_keys = $hintr_settings['search_in'][$post_type] ?? []; ?>
+
         <div class="hintr-form-group">
           <p class="hintr-label"><?= $post_type_object->label ?></p>
           <?php if ($meta_keys): ?>
             <div class="hintr-checkboxes">
               <?php foreach ($meta_keys as $meta_key): ?>
-                <label class="hintr-checkbox" for="<?= $post_type . '-' . $meta_key ?>"><input id="<?= $post_type . '-' . $meta_key ?>" type="checkbox" value="<?= $meta_key ?>"><?= $meta_key ?></label>
+                <label class="hintr-checkbox" for="<?= $post_type . '-' . $meta_key ?>">
+                  <input <?php checked(in_array($meta_key, $checked_meta_keys), true) ?> id="<?= $post_type . '-' . $meta_key ?>" name="hintr_settings[search_in][<?= $post_type ?>][]" type="checkbox" value="<?= $meta_key ?>">
+                  <?= $meta_key ?>
+                </label>
               <?php endforeach; ?>
             </div>
           <?php else: ?>
             No meta keys found for this post type.
           <?php endif; ?>
         </div>
+
       <?php }
     } ?>
   <?php }
