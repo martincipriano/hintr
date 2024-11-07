@@ -1,5 +1,13 @@
 <?php
 
+if (!function_exists('hintr_admin_enqueue_scripts')) {
+  add_action('admin_enqueue_scripts', 'hintr_admin_enqueue_scripts');
+  function hintr_admin_enqueue_scripts() {
+    wp_enqueue_style('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css', [], '2.9.2');
+    wp_enqueue_script('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js', [], '2.9.2', true);
+  }
+}
+
 if (!function_exists('hintr_get_post_type_metadata')) {
   function hintr_get_post_type_metadata($post_type) {
     global $wpdb;
