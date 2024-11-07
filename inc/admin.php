@@ -87,14 +87,17 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
     $selected_post_types = ['post', 'page'];
 
     $hintr_settings = get_option('hintr_settings');
-    if ($hintr_settings) {
-      $selected_post_types = $hintr_settings['post_types'] ?? [];
-    }
+    $selected_post_types = $hintr_settings ? $hintr_settings['post_types'] : ['post', 'page'];
 
     foreach($selected_post_types as $post_type) {
       if (post_type_exists($post_type)) {
         $post_type_object = get_post_type_object($post_type);
+
+
         $meta_keys = hintr_get_post_type_metadata($post_type);
+
+
+
         $checked_meta_keys = $hintr_settings['search_in'][$post_type] ?? []; ?>
 
         <div class="hintr-form-group">
