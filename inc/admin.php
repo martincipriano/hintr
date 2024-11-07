@@ -84,8 +84,6 @@ if (!function_exists('hintr_settings_post_types')) {
 
 if (!function_exists('hintr_settings_default_post_metadata')) {
   function hintr_settings_default_post_metadata($args) {
-    $selected_post_types = ['post', 'page'];
-
     $hintr_settings = get_option('hintr_settings');
     $selected_post_types = $hintr_settings ? $hintr_settings['post_types'] : ['post', 'page'];
 
