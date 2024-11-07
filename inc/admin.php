@@ -72,10 +72,10 @@ if (!function_exists('hintr_settings_default_post_types')) {
 
     $hintr_settings = get_option('hintr_settings');
     if ($hintr_settings) {
-      $default_post_types = explode(',', $hintr_settings['default_post_types']);
+      $default_post_types = $hintr_settings['default_post_types'] ?? [];
     } ?>
 
-    <select id="hintr-default-post-types" name="hintr_settings[default_post_types]" multiple>
+    <select id="hintr-default-post-types" name="hintr_settings[default_post_types][]" multiple>
       <?php foreach ($available_post_types as $post_type) { ?>
         <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $default_post_types), true); ?>><?= $post_type->label ?></option>
       <?php } ?>
@@ -91,7 +91,7 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
 
     $hintr_settings = get_option('hintr_settings');
     if ($hintr_settings) {
-      $default_post_types = explode(',', $hintr_settings['default_post_types']);
+      $default_post_types = $hintr_settings['default_post_types'] ?? [];
     }
 
     foreach($default_post_types as $post_type) {
