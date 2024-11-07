@@ -1,6 +1,12 @@
 <?php
 
-// Create an options page for the plugin.
+if (!function_exists('hintr_get_post_type_metadata')) {
+  function hintr_get_post_type_metadata($post_type) {
+    global $wpdb;
+    $meta_keys = $wpdb->get_col($wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type));
+    return $meta_keys;
+  }
+}
 
 if (!function_exists('hintr_create_settings')) {
   add_action('admin_menu', 'hintr_create_settings');
@@ -33,13 +39,16 @@ if (!function_exists('hintr_register_settings')) {
     add_settings_field('hintr_default_post_types', 'Post Types', 'hintr_settings_default_post_types', 'hintr', 'hintr_settings', [
       'description' => 'Select the default post types from which suggestions will be sourced.'
     ]);
+    add_settings_field('hintr_default_post_metadata', 'Post Metadata', 'hintr_settings_default_post_metadata', 'hintr', 'hintr_settings', [
+      'description' => 'Select the default post metadata from which suggestions will be sourced.'
+    ]);
   }
 }
 
-
-// Validate the settings.
-function hintr_settings_validate($input) {
-  return $input;
+if (!function_exists('hintr_settings_validate')) {
+  function hintr_settings_validate($input) {
+    return $input;
+  }
 }
 
 if (!function_exists('hintr_settings_default_post_types')) {
