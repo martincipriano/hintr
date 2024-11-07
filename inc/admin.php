@@ -86,7 +86,6 @@ if (!function_exists('hintr_settings_default_post_types')) {
 
 if (!function_exists('hintr_settings_default_post_metadata')) {
   function hintr_settings_default_post_metadata($args) {
-    $available_post_types = get_post_types(['exclude_from_search' => false], 'object');
     $default_post_types = ['post', 'page'];
 
     $hintr_settings = get_option('hintr_settings');
@@ -95,21 +94,22 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
     }
 
     foreach($default_post_types as $post_type) {
-      $meta_keys = hintr_get_post_type_metadata($post_type);
-      if ($meta_keys) {
-        foreach ($meta_keys as $meta_key) { ?>
-          <label class="hintr-checkbox" for="<?= $post_type . '-' . $meta_key ?>"><input id="<?= $post_type . '-' . $meta_key ?>" type="checkbox" value="<?= $meta_key ?>"><?= $meta_key ?></label>
-        <?php }
-      } else {
-        echo 'No meta keys found for this post type.';
-      }
+      if (post_type_exists($post_type)) {
+        $post_type_object = get_post_type_object($post_type);
+        $meta_keys = hintr_get_post_type_metadata($post_type); ?>
+        <div class="hintr-form-group">
+          <p class="hintr-label"><?= $post_type_object->label ?></p>
+          <?php if ($meta_keys): ?>
+            <div class="hintr-checkboxes">
+              <?php foreach ($meta_keys as $meta_key): ?>
+                <label class="hintr-checkbox" for="<?= $post_type . '-' . $meta_key ?>"><input id="<?= $post_type . '-' . $meta_key ?>" type="checkbox" value="<?= $meta_key ?>"><?= $meta_key ?></label>
+              <?php endforeach; ?>
+            </div>
+          <?php else: ?>
+            No meta keys found for this post type.
+          <?php endif; ?>
+        </div>
+      <?php }
     } ?>
-
-    <!--select name="hintr_settings[default_post_types]">
-      <?php foreach ($available_post_types as $post_type) { ?>
-        <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $default_post_types), true); ?>><?= $post_type->label ?></option>
-      <?php } ?>
-    </select-->
-    <p class="description" id="new-admin-email-description"><?= $args['description'] ?></p>
   <?php }
 }
