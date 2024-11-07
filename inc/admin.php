@@ -49,7 +49,7 @@ if (!function_exists('hintr_register_settings')) {
   add_action('admin_init', 'hintr_register_settings');
   function hintr_register_settings() {
     register_setting('hintr_settings', 'hintr_settings', 'hintr_settings_validate');
-    add_settings_section('hintr_settings', '', '', 'hintr');
+    add_settings_section('hintr_settings', 'Search Keywords In', '', 'hintr');
     add_settings_field('hintr_default_post_types', 'Post Types', 'hintr_settings_default_post_types', 'hintr', 'hintr_settings', [
       'description' => 'Select the default post types from which suggestions will be sourced.'
     ]);
@@ -67,7 +67,6 @@ if (!function_exists('hintr_settings_validate')) {
 
 if (!function_exists('hintr_settings_default_post_types')) {
   function hintr_settings_default_post_types($args) {
-    $available_post_types = get_post_types(['exclude_from_search' => false], 'object');
     $default_post_types = ['post', 'page'];
 
     $hintr_settings = get_option('hintr_settings');
@@ -76,9 +75,14 @@ if (!function_exists('hintr_settings_default_post_types')) {
     } ?>
 
     <select id="hintr-default-post-types" name="hintr_settings[default_post_types][]" multiple>
-      <?php foreach ($available_post_types as $post_type) { ?>
-        <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $default_post_types), true); ?>><?= $post_type->label ?></option>
-      <?php } ?>
+      <?php foreach ($default_post_types as $post_type): ?>
+        <?php if (post_type_exists($post_type)): ?>
+          <?php
+            $post_type_object = get_post_type_object($post_type);
+          ?>
+          <option value="<?= $post_type_object->name ?>" <?php selected(in_array($post_type_object->name, $default_post_types), true); ?>><?= $post_type_object->label ?></option>
+        <?php endif; ?>
+      <?php endforeach; ?>
     </select>
     <p class="description" id="new-admin-email-description"><?= $args['description'] ?></p>
   <?php }
