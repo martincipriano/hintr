@@ -3,8 +3,14 @@
 if (!function_exists('hintr_admin_enqueue_scripts')) {
   add_action('admin_enqueue_scripts', 'hintr_admin_enqueue_scripts');
   function hintr_admin_enqueue_scripts() {
+    $plugin_path = plugin_dir_path(dirname(__FILE__));
+    $plugin_url = plugin_dir_url(dirname(__FILE__));
+
     wp_enqueue_style('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css', [], '2.9.2');
+    wp_enqueue_style('hintr-admin', $plugin_url . 'assets/css/hintr-admin.css', [], filemtime($plugin_path . 'assets/css/hintr-admin.css'));
+
     wp_enqueue_script('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js', [], '2.9.2', true);
+    wp_enqueue_script('hintr-admin', $plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], filemtime($plugin_path . 'assets/js/hintr-admin.js'), true);
   }
 }
 
