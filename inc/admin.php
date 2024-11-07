@@ -70,3 +70,34 @@ if (!function_exists('hintr_settings_default_post_types')) {
     <p class="description" id="new-admin-email-description"><?= $args['description'] ?></p>
   <?php }
 }
+
+if (!function_exists('hintr_settings_default_post_metadata')) {
+  function hintr_settings_default_post_metadata($args) {
+    $hintr_settings = get_option('hintr_settings');
+
+    $available_post_types = get_post_types(['exclude_from_search' => false], 'object');
+    $default_post_types = explode(',', $hintr_settings['default_post_types']);
+
+    if (!$default_post_types) {
+      $default_post_types = ['post', 'page'];
+    }
+
+    foreach($default_post_types as $post_type) {
+      $meta_keys = hintr_get_post_type_metadata($post_type);
+      if ($meta_keys) {
+        foreach ($meta_keys as $meta_key) {
+            echo $meta_key . '<br>';
+        }
+      } else {
+        echo 'No meta keys found for this post type.';
+      }
+    } ?>
+
+    <!--select name="hintr_settings[default_post_types]">
+      <?php foreach ($available_post_types as $post_type) { ?>
+        <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $default_post_types), true); ?>><?= $post_type->label ?></option>
+      <?php } ?>
+    </select-->
+    <p class="description" id="new-admin-email-description"><?= $args['description'] ?></p>
+  <?php }
+}
