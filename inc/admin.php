@@ -6,10 +6,10 @@ if (!function_exists('hintr_admin_enqueue_scripts')) {
     $plugin_path = plugin_dir_path(dirname(__FILE__));
     $plugin_url = plugin_dir_url(dirname(__FILE__));
 
-    wp_enqueue_style('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.css', [], '2.9.2');
+    wp_enqueue_style('slim-select', $plugin_url . 'assets/css/slimselect.min.css', [], '2.9.2');
     wp_enqueue_style('hintr-admin', $plugin_url . 'assets/css/hintr-admin.css', [], filemtime($plugin_path . 'assets/css/hintr-admin.css'));
 
-    wp_enqueue_script('slim-select', 'https://cdnjs.cloudflare.com/ajax/libs/slim-select/1.27.0/slimselect.min.js', [], '2.9.2', true);
+    wp_enqueue_script('slim-select', $plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
     wp_enqueue_script('hintr-admin', $plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], filemtime($plugin_path . 'assets/js/hintr-admin.js'), true);
   }
 }
@@ -67,16 +67,15 @@ if (!function_exists('hintr_settings_validate')) {
 
 if (!function_exists('hintr_settings_default_post_types')) {
   function hintr_settings_default_post_types($args) {
-    $hintr_settings = get_option('hintr_settings');
-
     $available_post_types = get_post_types(['exclude_from_search' => false], 'object');
-    $default_post_types = explode(',', $hintr_settings['default_post_types']);
+    $default_post_types = ['post', 'page'];
 
-    if (!$default_post_types) {
-      $default_post_types = ['post', 'page'];
+    $hintr_settings = get_option('hintr_settings');
+    if ($hintr_settings) {
+      $default_post_types = explode(',', $hintr_settings['default_post_types']);
     } ?>
 
-    <select name="hintr_settings[default_post_types]">
+    <select id="hintr-default-post-types" name="hintr_settings[default_post_types]" multiple>
       <?php foreach ($available_post_types as $post_type) { ?>
         <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $default_post_types), true); ?>><?= $post_type->label ?></option>
       <?php } ?>
@@ -87,13 +86,12 @@ if (!function_exists('hintr_settings_default_post_types')) {
 
 if (!function_exists('hintr_settings_default_post_metadata')) {
   function hintr_settings_default_post_metadata($args) {
-    $hintr_settings = get_option('hintr_settings');
-
     $available_post_types = get_post_types(['exclude_from_search' => false], 'object');
-    $default_post_types = explode(',', $hintr_settings['default_post_types']);
+    $default_post_types = ['post', 'page'];
 
-    if (!$default_post_types) {
-      $default_post_types = ['post', 'page'];
+    $hintr_settings = get_option('hintr_settings');
+    if ($hintr_settings) {
+      $default_post_types = explode(',', $hintr_settings['default_post_types']);
     }
 
     foreach($default_post_types as $post_type) {
