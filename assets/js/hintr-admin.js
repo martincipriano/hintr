@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
   new SlimSelect({
-    select: '#selectElement'
+    select: '#hintr-default-post-types'
   })
 })
