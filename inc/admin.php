@@ -90,14 +90,8 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
     foreach($selected_post_types as $post_type) {
       if (post_type_exists($post_type)) {
         $post_type_object = get_post_type_object($post_type);
-
-
         $meta_keys = hintr_get_post_type_metadata($post_type);
-
-
-
         $checked_meta_keys = $hintr_settings['search_in'][$post_type] ?? []; ?>
-
         <div class="hintr-form-group">
           <p class="hintr-label"><?= $post_type_object->label ?></p>
           <?php if ($meta_keys): ?>
@@ -113,7 +107,6 @@ if (!function_exists('hintr_settings_default_post_metadata')) {
             No meta keys found for this post type.
           <?php endif; ?>
         </div>
-
       <?php }
     } ?>
   <?php }

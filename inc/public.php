@@ -127,8 +127,8 @@ if (!function_exists('hintr_enqueue_scripts')) {
     $plugin_path = plugin_dir_path(dirname(__FILE__));
     $plugin_url = plugin_dir_url(dirname(__FILE__));
 
-    wp_enqueue_style('hintr', $plugin_url . 'hintr.css', [], filemtime($plugin_path . 'assets/css/hintr-public.css'));
-    wp_enqueue_script('hintr', $plugin_url . 'hintr.js', ['jquery'], filemtime($plugin_path . 'assets/js/hintr-public.js'), true);
+    wp_enqueue_style('hintr', $plugin_url . 'assets/css/hintr-public.css', [], filemtime($plugin_path . 'assets/css/hintr-public.css'));
+    wp_enqueue_script('hintr', $plugin_url . 'assets/js/hintr-public.js', ['jquery'], filemtime($plugin_path . 'assets/js/hintr-public.js'), true);
     wp_localize_script('hintr', 'hintrData', [
       'uploadDir' => wp_upload_dir()['baseurl'] . '/hintr/',
       'hint' => '<li><a class="hintr-nav-item" href="url">title</a></li>'
