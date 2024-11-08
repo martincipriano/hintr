@@ -1,19 +1,5 @@
 <?php
 
-if (!function_exists('hintr_admin_enqueue_scripts')) {
-  add_action('admin_enqueue_scripts', 'hintr_admin_enqueue_scripts');
-  function hintr_admin_enqueue_scripts() {
-    $plugin_path = plugin_dir_path(dirname(__FILE__));
-    $plugin_url = plugin_dir_url(dirname(__FILE__));
-
-    wp_enqueue_style('slim-select', $plugin_url . 'assets/css/slimselect.min.css', [], '2.9.2');
-    wp_enqueue_style('hintr-admin', $plugin_url . 'assets/css/hintr-admin.css', [], filemtime($plugin_path . 'assets/css/hintr-admin.css'));
-
-    wp_enqueue_script('slim-select', $plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
-    wp_enqueue_script('hintr-admin', $plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], filemtime($plugin_path . 'assets/js/hintr-admin.js'), true);
-  }
-}
-
 /**
  * Activation callback for the Hintr plugin.
  *
@@ -25,7 +11,7 @@ if (!function_exists('hintr_admin_enqueue_scripts')) {
  * @return void
  */
 if (!function_exists('hintr_activate')) {
-  register_activation_hook(plugin_dir_path(dirname(__FILE__)), 'hintr_activate');
+  register_activation_hook(__FILE__, 'hintr_activate');
   function hintr_activate() {
     $settings = get_option('hintr_settings');
     if (!$settings)  {
@@ -36,6 +22,20 @@ if (!function_exists('hintr_activate')) {
         ],
       ]);
     }
+  }
+}
+
+if (!function_exists('hintr_admin_enqueue_scripts')) {
+  add_action('admin_enqueue_scripts', 'hintr_admin_enqueue_scripts');
+  function hintr_admin_enqueue_scripts() {
+    $plugin_path = plugin_dir_path(dirname(__FILE__));
+    $plugin_url = plugin_dir_url(dirname(__FILE__));
+
+    wp_enqueue_style('slim-select', $plugin_url . 'assets/css/slimselect.min.css', [], '2.9.2');
+    wp_enqueue_style('hintr-admin', $plugin_url . 'assets/css/hintr-admin.css', [], filemtime($plugin_path . 'assets/css/hintr-admin.css'));
+
+    wp_enqueue_script('slim-select', $plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
+    wp_enqueue_script('hintr-admin', $plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], filemtime($plugin_path . 'assets/js/hintr-admin.js'), true);
   }
 }
 
