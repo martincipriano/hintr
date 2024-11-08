@@ -111,6 +111,23 @@ if (!function_exists('hintr_delete_json_post')) {
 }
 
 /**
+ * Generates an HTML template for a search suggestion item.
+ *
+ * This function outputs an `<li>` element containing an anchor `<a>`
+ * element formatted for displaying search suggestions. The function
+ * uses output buffering to return the generated HTML as a string.
+ *
+ * @return string The HTML structure for a search suggestion item.
+ */
+if (!function_exists('hintr_hint_template')) {
+  function hintr_hint_template() {
+    ob_start(); ?>
+    <li><a class="hintr-nav-item" href="url">title</a></li>
+    <?php return ob_get_clean();
+  }
+}
+
+/**
  * Enqueue the plugin scripts and styles.
  *
  * This function is called when WordPress enqueues scripts and styles.
@@ -131,7 +148,7 @@ if (!function_exists('hintr_enqueue_scripts')) {
     wp_enqueue_script('hintr', $plugin_url . 'assets/js/hintr-public.js', ['jquery'], filemtime($plugin_path . 'assets/js/hintr-public.js'), true);
     wp_localize_script('hintr', 'hintrData', [
       'uploadDir' => wp_upload_dir()['baseurl'] . '/hintr/',
-      'hint' => '<li><a class="hintr-nav-item" href="url">title</a></li>'
+      'hint' => hintr_hint_template()
     ]);
   }
 }
