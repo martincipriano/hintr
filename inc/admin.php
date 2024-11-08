@@ -14,6 +14,31 @@ if (!function_exists('hintr_admin_enqueue_scripts')) {
   }
 }
 
+/**
+ * Activation callback for the Hintr plugin.
+ *
+ * This function is triggered when the plugin is activated. It checks if the
+ * 'hintr_settings' option already exists in the WordPress database. If the
+ * option does not exist, it initializes the default settings with an array
+ * specifying 'search_in' for 'post' and 'page'.
+ *
+ * @return void
+ */
+if (!function_exists('hintr_activate')) {
+  register_activation_hook(plugin_dir_path(dirname(__FILE__)), 'hintr_activate');
+  function hintr_activate() {
+    $settings = get_option('hintr_settings');
+    if (!$settings)  {
+      update_option('hintr_settings', [
+        'search_in' => [
+          'post' => [],
+          'page' => []
+        ],
+      ]);
+    }
+  }
+}
+
 if (!function_exists('hintr_get_post_type_metadata')) {
   function hintr_get_post_type_metadata($post_type) {
     global $wpdb;
