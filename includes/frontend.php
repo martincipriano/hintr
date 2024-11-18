@@ -11,6 +11,8 @@ class Hintr {
     $this->plugin_url = plugin_dir_url(dirname(__FILE__));
     $this->plugin_uploads_url = wp_upload_dir()['baseurl'] . '/hintr/';
     $this->plugin_settings = get_option('hintr_settings');
+
+    add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
   }
 
   public function enqueue_scripts() : void
