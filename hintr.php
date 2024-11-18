@@ -19,6 +19,12 @@ class Hintr {
     $this->plugin_url = plugin_dir_url(__FILE__);
     $this->plugin_settings = get_option('hintr_settings');
   }
+
+  public function enqueue_scripts() : void
+  {
+    wp_enqueue_style('hintr', $this->plugin_url . 'assets/css/hintr.css', [], filemtime($this->plugin_path . 'assets/css/hintr.css'), 'all');
+    wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], filemtime($this->plugin_path . 'assets/js/hintr.js'), true);
+  }
 }
 
 new Hintr;
