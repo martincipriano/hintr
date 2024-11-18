@@ -14,5 +14,9 @@ class Hintr_Admin {
   }
 
   public function activate() : void
-  {}
+  {
+    if (!is_writable(ABSPATH . 'wp-content/uploads')) {
+      wp_die('Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.');
+    }
+  }
 }
