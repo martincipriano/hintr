@@ -8,3 +8,17 @@
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
+
+class Hintr {
+  private $plugin_path;
+  private $plugin_url;
+  private $plugin_settings;
+
+  public function __construct() {
+    $this->plugin_path = plugin_dir_path(__FILE__);
+    $this->plugin_url = plugin_dir_url(__FILE__);
+    $this->plugin_settings = get_option('hintr_settings');
+  }
+}
+
+new Hintr;
