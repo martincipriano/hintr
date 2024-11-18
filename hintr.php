@@ -26,7 +26,7 @@ class Hintr {
     wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], filemtime($this->plugin_path . 'assets/js/hintr.js'), true);
 
     wp_localize_script('hintr', 'hintr', [
-      'settings' => $this->plugin_settings
+      'search_in' => $this->plugin_settings
     ]);
   }
 }
