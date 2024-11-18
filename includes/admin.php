@@ -38,7 +38,7 @@ class Hintr_Admin {
     }
 
     // Create the plugin settings in the wp_options table
-    update_option('hintr_settings', $initial_settings);
+    update_option('hintr_settings', $this->initial_plugin_settings);
   }
 
   public function admin_notice() : void
