@@ -1,0 +1,33 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows system files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux system files
+*~
+.nfs*
+
+# Temporary files created by text editors
+*.swp
+*.swo
+*.bak
+*.tmp
+*.orig
+*.save
+
+# Log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Hidden files and folders
+._*
+.fseventsd
+.Spotlight-V100
+.Trashes
