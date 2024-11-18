@@ -50,3 +50,5 @@ class Hintr_Admin {
     }
   }
 }
+
+new Hintr_Admin;
