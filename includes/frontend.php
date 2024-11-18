@@ -19,8 +19,9 @@ class Hintr {
     wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], filemtime($this->plugin_path . 'assets/js/hintr.js'), true);
 
     wp_localize_script('hintr', 'hintr', [
-      'uploads_url' => $this->plugin_uploads_url,
-      'search_in' => $this->plugin_settings
+      'hint' => '<li><a class="hint" href="url">title</a></li>',
+      'search_in' => $this->plugin_settings,
+      'uploads_url' => $this->plugin_uploads_url
     ]);
   }
 }
