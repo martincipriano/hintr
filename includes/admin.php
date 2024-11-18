@@ -20,7 +20,7 @@ class Hintr_Admin {
     ];
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
-    add_action('admin_notices', [$this, 'display_error']);
+    add_action('admin_notices', [$this, 'admin_notice']);
   }
 
   public function activate() : void
@@ -41,7 +41,7 @@ class Hintr_Admin {
     update_option('hintr_settings', $initial_settings);
   }
 
-  public function display_error() : void
+  public function admin_notice() : void
   {
     // Check if the uploads directory exists and is writable
     // If it doesn't, display an error message
