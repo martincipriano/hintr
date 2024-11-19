@@ -7,7 +7,8 @@ class Hintr_Admin {
   private $plugin_settings;
   private $initial_plugin_settings;
 
-  public function __construct() {
+  public function __construct()
+  {
     $this->uploads_path = ABSPATH . 'wp-content/uploads';
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
     $this->plugin_url = plugin_dir_url(dirname(__FILE__));
@@ -48,6 +49,13 @@ class Hintr_Admin {
     if (!is_writable($this->uploads_path)) {
       echo '<div class="error"><p>Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.</p></div>';
     }
+  }
+
+  public function get_meta_keys($post_type) : array
+  {
+    global $wpdb;
+    $query = $wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type);
+    return $wpdb->get_col($query);
   }
 }
 
