@@ -1,7 +1,8 @@
 <?php
 
 class Hintr_Admin {
-  private $uploads_path;
+  private $wordpress_uploads_path;
+  private $plugin_uploads_path;
   private $plugin_path;
   private $plugin_url;
   private $plugin_settings;
@@ -9,7 +10,8 @@ class Hintr_Admin {
 
   public function __construct()
   {
-    $this->uploads_path = ABSPATH . 'wp-content/uploads';
+    $this->wordpress_uploads_path = ABSPATH . 'wp-content/uploads/';
+    $this->plugin_uploads_path = ABSPATH . 'wp-content/uploads/hintr/';
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
     $this->plugin_url = plugin_dir_url(dirname(__FILE__));
     $this->plugin_settings = get_option('hintr_settings');
@@ -28,14 +30,14 @@ class Hintr_Admin {
   {
     // Check if the uploads directory exists and is writable
     // If it doesn't, display an error message and stop the activation process
-    if (!is_writable(ABSPATH . 'wp-content/uploads')) {
+    if (!is_writable($this->wordpress_uploads_path)) {
       wp_die('Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.');
     }
 
     // If the uploads directory exists and is writable,
     // create the hintr directory in which we will store the json files needed for the sarch
-    if (!file_exists(ABSPATH . 'wp-content/uploads/hintr')) {
-      mkdir(ABSPATH . 'wp-content/uploads/hintr');
+    if (!file_exists($this->plugin_uploads_path)) {
+      mkdir($this->plugin_uploads_path);
     }
 
     // Create the plugin settings in the wp_options table
@@ -46,7 +48,7 @@ class Hintr_Admin {
   {
     // Check if the uploads directory exists and is writable
     // If it doesn't, display an error message
-    if (!is_writable($this->uploads_path)) {
+    if (!is_writable($this->wordpress_uploads_path)) {
       echo '<div class="error"><p>Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.</p></div>';
     }
   }
@@ -61,7 +63,7 @@ class Hintr_Admin {
   public function create_json($settings = []) : void
   {
     if (!$settings) {
-      $settings = get_option('hintr_settings');
+      $settings = $this->plugin_settings;
     }
 
     $posts_per_batch = 100;
@@ -97,7 +99,7 @@ class Hintr_Admin {
 
       } while (count($posts) === $posts_per_batch);
 
-      file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json', json_encode($post_type_data));
+      file_put_contents($this->plugin_uploads_path . $post_type . '.json', json_encode($post_type_data));
     }
   }
 }
