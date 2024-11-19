@@ -57,6 +57,13 @@ class Hintr_Admin {
     $query = $wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type);
     return $wpdb->get_col($query);
   }
+
+  public function create_json($settings =[]) : void
+  {
+    if (!$settings) {
+      $settings = get_option('hintr_settings');
+    }
+  }
 }
 
 new Hintr_Admin;
