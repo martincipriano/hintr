@@ -58,10 +58,46 @@ class Hintr_Admin {
     return $wpdb->get_col($query);
   }
 
-  public function create_json($settings =[]) : void
+  public function create_json($settings = []) : void
   {
     if (!$settings) {
       $settings = get_option('hintr_settings');
+    }
+
+    $posts_per_batch = 100;
+
+    foreach ($settings['search_in'] as $post_type => $meta_keys) {
+      $post_type_data = [];
+      $page = 1;
+
+      do {
+        $posts = get_posts([
+          'post_status' => 'publish',
+          'post_type' => $post_type,
+          'posts_per_page' => $posts_per_batch,
+          'paged' => $page
+        ]);
+
+        foreach ($posts as $post) {
+
+          $post_type_data[$post->ID] = [
+            'metadata' => [],
+            'post_type' => $post->post_type,
+            'title' => $post->post_title,
+            'url' => get_permalink($post)
+          ];
+
+          foreach ($meta_keys as $meta_key) {
+            $metadata = get_post_meta($post->ID, $meta_key, false);
+            $post_type_data[$post->ID]['metadata'][$meta_key] = implode(',', $metadata);
+          }
+        }
+
+        $page++;
+
+      } while (count($posts) === $posts_per_batch);
+
+      file_put_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post_type . '.json', json_encode($post_type_data));
     }
   }
 }
