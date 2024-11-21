@@ -73,6 +73,10 @@ class Hintr_Settings {
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
+
+  public function post_type_field() : void
+  {
+  }
 }
 
 new Hintr_Settings;
