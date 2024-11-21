@@ -96,6 +96,10 @@ class Hintr_Settings extends Hintr_Admin {
       <p class="description"><?= $args['description'] ?></p>
     </div>
   <?php }
+
+  public function metadata_field() : void
+  {
+  }
 }
 
 new Hintr_Settings;
