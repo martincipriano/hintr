@@ -76,7 +76,7 @@ class Hintr_Settings extends Hintr_Admin {
     <?php
   }
 
-  public function post_type_field() : void
+  public function post_type_field($args) : void
   {
     $selected_post_types = array_keys($this->plugin_settings['search_in'] ?? []);
     $public_post_types = get_post_types(['public' => true], 'objects');
@@ -128,7 +128,7 @@ class Hintr_Settings extends Hintr_Admin {
     }
   }
 
-  public function reindex_field() : void
+  public function reindex_field($args) : void
   { ?>
     <div class="hintr-form-group">
       <div class="hintr-checkboxes">
