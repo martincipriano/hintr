@@ -51,8 +51,15 @@ class Hintr_Settings {
 
     $field_id     = 'hintr_post_types';
     $field_title  = _e('Post Types', 'hintr');
-    $field_cb     = [$this, 'settings_post_types'];
+    $field_cb     = [$this, 'post_type_field'];
     $args         = ['description' => _e('Select the default post types from which suggestions will be sourced.', 'hintr')];
+
+    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
+
+    $field_id     = 'hintr_metadata';
+    $field_title  = _e('Post Metadata', 'hintr');
+    $field_cb     = [$this, 'metadata_field'];
+    $args         = ['description' => _e('Select the default post metadata from which suggestions will be sourced.', 'hintr')];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
