@@ -31,6 +31,10 @@ window.hintr.toggleSuggestions = function(e) {
       suggestions.classList.add('show')
     }
 
+    if (settingsOverride) {
+      postTypes = Object.keys(settingsOverride.search_in)
+    }
+
   } else {
     suggestions.classList.remove('show')
   }
