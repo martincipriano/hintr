@@ -35,6 +35,11 @@ window.hintr.toggleSuggestions = function(e) {
       postTypes = Object.keys(settingsOverride.search_in)
     }
 
+    let promises = postTypes.map(postType => {
+      return fetch(settings.uploadDir + postType + '.json')
+        .then(response => response.json())
+    })
+
   } else {
     suggestions.classList.remove('show')
   }
