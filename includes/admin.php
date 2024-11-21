@@ -119,9 +119,19 @@ class Hintr_Admin {
 
   public function update_json_post($post) : void
   {
+    // Check if the file exists before doing a file get contents
     if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
       $json_file = file_get_contents($this->plugin_uploads_path . $post->post_type . '.json');
       $posts = json_decode($json_file, true);
+
+      $posts[$post->ID] = [
+        'metadata' => [],
+        'post_type' => $post->post_type,
+        'title' => $post->post_title,
+        'url' => get_permalink($post)
+      ];
+
+      file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
     }
   }
 }
