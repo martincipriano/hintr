@@ -107,6 +107,11 @@ class Hintr_Admin {
   {
     if (isset($post_type) && $post_type) {
       unlink($this->plugin_uploads_path . $post_type . '.json');
+    } else {
+      $files = glob($this->plugin_uploads_path . '*.json');
+      foreach ($files as $file) {
+        unlink($file);
+      }
     }
   }
 }
