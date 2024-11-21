@@ -31,7 +31,10 @@ class Hintr_Admin {
   public function enqueue_scripts() : void
   {
     wp_enqueue_style('slim-select', $this->plugin_url . 'assets/css/slimselect.min.css', [], '2.9.2');
+    wp_enqueue_style('hintr-admin', $this->plugin_url . 'assets/css/hintr-admin.css', [], filemtime($this->plugin_path . 'assets/css/hintr-admin.css'));
+
     wp_enqueue_script('slim-select', $this->plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
+    wp_enqueue_script('hintr-admin', $this->plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], filemtime($this->plugin_path . 'assets/js/hintr-admin.js'), true);
   }
 
   public function activate() : void
