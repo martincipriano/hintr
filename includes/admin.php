@@ -141,6 +141,10 @@ class Hintr_Admin {
       file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
     }
   }
+
+  public function delete_json_post($post) : void
+  {
+  }
 }
 
 new Hintr_Admin;
