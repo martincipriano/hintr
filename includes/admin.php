@@ -131,6 +131,11 @@ class Hintr_Admin {
         'url' => get_permalink($post)
       ];
 
+      foreach ($this->plugin_settings['search_in'][$post->post_type] as $meta_key) {
+        $metadata = get_post_meta($post->ID, $meta_key, false);
+        $posts[$post->ID]['metadata'][$meta_key] = implode(',', $metadata);
+      }
+
       file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
     }
   }
