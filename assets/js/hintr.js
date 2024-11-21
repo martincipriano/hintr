@@ -40,6 +40,13 @@ window.hintr.toggleSuggestions = function(e) {
         .then(response => response.json())
     })
 
+    Promise.all(promises)
+      .then(data => {
+        data = data.reduce((acc, innerObj) => {
+          return { ...acc, ...innerObj }
+        }, {})
+      })
+
   } else {
     suggestions.classList.remove('show')
   }
