@@ -139,6 +139,10 @@ class Hintr_Settings extends Hintr_Admin {
       <p class="description"><em><?= $args['note'] ?></em></p>
     </div>
   <?php }
+
+  public function validate_settings($input) : array
+  {
+  }
 }
 
 new Hintr_Settings;
