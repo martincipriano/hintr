@@ -5,6 +5,7 @@ class Hintr_Settings extends Hintr_Admin {
   public function __construct()
   {
     add_action('admin_menu', [$this, 'create_settings_page']);
+    add_action('admin_init', [$this, 'register_settings_page']);
   }
 
   public function create_settings_page() : void
