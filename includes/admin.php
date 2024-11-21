@@ -117,9 +117,12 @@ class Hintr_Admin {
     }
   }
 
+  /**
+   * To do:
+   *  - If the post doesn't exist in the json file, add it
+   */
   public function update_json_post($post) : void
   {
-    // Check if the file exists before doing a file get contents
     if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
       $json_file = file_get_contents($this->plugin_uploads_path . $post->post_type . '.json');
       $posts = json_decode($json_file, true);
