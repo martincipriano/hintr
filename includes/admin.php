@@ -116,6 +116,10 @@ class Hintr_Admin {
       }
     }
   }
+
+  public function update_json_post() : void
+  {
+  }
 }
 
 new Hintr_Admin;
