@@ -18,6 +18,12 @@ window.hintr.init = function() {
 }
 
 window.hintr.toggleSuggestions = function(e) {
+  let input = e.currentTarget
+  let suggestions = input.nextElementSibling
+
+  let settings = hintrSettings 
+  let settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false 
+  let postTypes = Object.keys(settings.search_in)
 }
 
 window.hintr.eventListeners = function() {
