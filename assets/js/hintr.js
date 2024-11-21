@@ -91,6 +91,10 @@ window.hintr.hideSuggestions = function(e) {
 
 window.hintr.eventListeners = function() {
   let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
+
+  inputs.forEach(input => {
+    input.addEventListener('keyup', window.hintr.toggleSuggestions)
+  })
 }
 
 document.addEventListener('DOMContentLoaded', function() {
