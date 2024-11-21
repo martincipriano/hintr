@@ -45,6 +45,36 @@ window.hintr.toggleSuggestions = function(e) {
         data = data.reduce((acc, innerObj) => {
           return { ...acc, ...innerObj }
         }, {})
+        data = Object.values(data)
+        data = data.filter(function(item) {
+
+          let condition = []
+          let keyword = input.value.toLowerCase()
+          let title = item.title.toLowerCase()
+          let metadata = item.metadata
+
+          if (settingsOverride) {
+
+            if (typeof settingsOverride.search_in[item.post_type] === 'undefined')
+              return;
+
+            Object.keys(metadata).forEach(key => {
+              if (!settingsOverride.search_in[item.post_type].includes(key)) {
+                delete metadata[key]
+              }
+            })
+          }
+
+          for (let key in metadata) {
+            if (metadata.hasOwnProperty(key)) {
+              condition.push(metadata[key].toLowerCase().includes(keyword))
+            }
+          }
+
+          condition.push(title.includes(keyword))
+
+          return condition.includes(true)
+        })
       })
 
   } else {
