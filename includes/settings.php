@@ -30,31 +30,31 @@ class Hintr_Settings extends Hintr_Admin {
 
     register_setting($option_group, $option_name, $validation_callback);
 
-    $section_title  = _e('Search Keywords In', 'hintr');
-    $section_cb     = _e('', 'hintr');
+    $section_title  = 'Search Keywords In';
+    $section_cb     = '';
 
     add_settings_section($section_id, $section_title, $section_cb, $page);
 
     $field_id     = 'hintr_post_types';
-    $field_title  = _e('Post Types', 'hintr');
+    $field_title  = 'Post Types';
     $field_cb     = [$this, 'post_type_field'];
-    $args         = ['description' => _e('Select the default post types from which suggestions will be sourced.', 'hintr')];
+    $args         = ['description' => 'Select the default post types from which suggestions will be sourced.'];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
 
     $field_id     = 'hintr_metadata';
-    $field_title  = _e('Post Metadata', 'hintr');
+    $field_title  = 'Post Metadata';
     $field_cb     = [$this, 'metadata_field'];
-    $args         = ['description' => _e('Select the default post metadata from which suggestions will be sourced.', 'hintr')];
+    $args         = ['description' => 'Select the default post metadata from which suggestions will be sourced.'];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
 
     $field_id     = 'hintr_reindex';
-    $field_title  = _e('Re-index Post Types', 'hintr');
+    $field_title  = 'Re-index Post Types';
     $field_cb     = [$this, 'reindex_field'];
     $args         = [
-      'description' => _e('Trigger a rebuild of the JSON data files used for search indexing.', 'hintr'),
-      'note'        => _e('Rebuilding the JSON files may take time depending on the number of posts and post metadata.', 'hintr')
+      'description' => 'Trigger a rebuild of the JSON data files used for search indexing.',
+      'note'        => 'Rebuilding the JSON files may take time depending on the number of posts and post metadata.'
     ];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
