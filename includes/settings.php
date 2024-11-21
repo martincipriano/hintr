@@ -78,7 +78,8 @@ class Hintr_Settings extends Hintr_Admin {
   public function post_type_field() : void
   {
     $selected_post_types = array_keys($this->plugin_settings['search_in'] ?? []);
-    $post_types = get_post_types(['public' => true], 'objects');
+    $public_post_types = get_post_types(['public' => true], 'objects');
+    $excluded_post_types = ['revision', 'wp_global_styles', 'wp_navigation'];
   }
 }
 
