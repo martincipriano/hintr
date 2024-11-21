@@ -102,7 +102,28 @@ class Hintr_Settings extends Hintr_Admin {
     $selected_post_types = array_keys($hintr_settings['search_in'] ?? []);
 
     foreach ($selected_post_types as $post_type) {
-      if (post_type_exists($post_type)) {}
+      if (post_type_exists($post_type)) {
+
+        $post_type_object   = get_post_type_object($post_type);
+        $meta_keys          = get_meta_keys($post_type);
+        $selected_meta_keys = $hintr_settings['search_in'][$post_type] ?? [];
+        $input_id           = 'hintr-' . $post_type . '-metadata'; ?>
+
+        <?php if ($meta_keys): ?>
+          <div class="hintr-form-group">
+            <label for="<?= $input_id ?>"><?= $post_type_object->label ?></label>
+            <select id="<?= $input_id ?>" name="hintr_settings[meta_keys][<?= $post_type ?>][]" multiple>
+              <?php foreach ($meta_keys as $meta_key): ?>
+                <option value="<?= $meta_key ?>" <?php selected(in_array($meta_key, $selected_meta_keys), true); ?>>
+                  <?= $meta_key ?>
+                </option>
+              <?php endforeach; ?>
+            </select>
+          </div>
+        <?php else: ?>
+          No available meta keys found for this post type.
+        <?php endif;
+      }
     }
   }
 }
