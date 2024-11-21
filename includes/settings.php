@@ -35,18 +35,26 @@ class Hintr_Settings {
 
   public function register_settings_page() : void
   {
-    $option_group = 'hintr_settings';
-    $option_name = 'hintr_settings';
-    $validation_callback = [$this, 'validate_settings'];
+    $page       = 'hintr'; // Should be the same as the slug used in add_options_page
+    $section_id = 'hintr_settings_section';
+
+    $option_group         = 'hintr_settings';
+    $option_name          = 'hintr_settings';
+    $validation_callback  = [$this, 'validate_settings'];
 
     register_setting($option_group, $option_name, $validation_callback);
 
-    $section_id = 'hintr_settings_page';
-    $title = _e('Search Keywords In', 'hintr');
-    $callback = '';
-    $page = 'hintr'; // Should be the same as the slug used in add_options_page
+    $section_title  = _e('Search Keywords In', 'hintr');
+    $section_cb     = _e('', 'hintr');
 
-    add_settings_section($section_id, $title, $callback, $page);
+    add_settings_section($section_id, $section_title, $section_cb, $page);
+
+    $field_id     = 'hintr_post_types';
+    $field_title  = _e('Post Types', 'hintr');
+    $field_cb     = [$this, 'settings_post_types'];
+    $args         = ['description' => _e('Select the default post types from which suggestions will be sourced.', 'hintr')];
+
+    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 }
 
