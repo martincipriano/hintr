@@ -77,6 +77,8 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function post_type_field() : void
   {
+    // Get the plugin settings
+    $selected = array_keys($this->plugin_settings['search_in'] ?? []);
   }
 }
 

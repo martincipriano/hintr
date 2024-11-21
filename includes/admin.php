@@ -1,19 +1,17 @@
 <?php
 
 class Hintr_Admin {
-  private $wordpress_uploads_path;
-  private $plugin_uploads_path;
-  private $plugin_path;
-  private $plugin_url;
-  private $plugin_settings;
-  private $initial_plugin_settings;
+  protected $wordpress_uploads_path;
+  protected $plugin_uploads_path;
+  protected $plugin_path;
+  protected $plugin_settings;
+  protected $initial_plugin_settings;
 
   public function __construct()
   {
     $this->wordpress_uploads_path = ABSPATH . 'wp-content/uploads/';
     $this->plugin_uploads_path = ABSPATH . 'wp-content/uploads/hintr/';
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
-    $this->plugin_url = plugin_dir_url(dirname(__FILE__));
     $this->plugin_settings = get_option('hintr_settings');
     $this->initial_plugin_settings = [
       'search_in' => [
