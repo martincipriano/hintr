@@ -24,6 +24,16 @@ window.hintr.toggleSuggestions = function(e) {
   let settings = hintrSettings 
   let settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false 
   let postTypes = Object.keys(settings.search_in)
+
+  if (input.value.length > 2) {
+
+    if (suggestions.classList.contains('show') === false) {
+      suggestions.classList.add('show')
+    }
+
+  } else {
+    suggestions.classList.remove('show')
+  }
 }
 
 window.hintr.eventListeners = function() {
