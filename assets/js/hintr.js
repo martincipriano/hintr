@@ -75,9 +75,9 @@ window.hintr.toggleSuggestions = function(e) {
           return condition.includes(true)
         })
 
-        list.innerHTML = ''
+        suggestions.innerHTML = ''
         data.forEach(item => {
-          list.innerHTML += hintrSettings.hint
+          suggestions.innerHTML += hintrSettings.hint
             .replace('title', item.title)
             .replace('url', item.url)
         })
