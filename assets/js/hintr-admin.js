@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  new SlimSelect({
-    select: 'hintr-select',
+  let selectInputs = document.querySelectorAll('.hintr-select')
+  selectInputs.forEach(function(selectInput) {
+    new SlimSelect({
+      select: selectInput,
+    })
   })
 })

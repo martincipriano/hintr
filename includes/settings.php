@@ -4,6 +4,7 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function __construct()
   {
+    parent::__construct();
     add_action('admin_menu', [$this, 'create_settings_page']);
     add_action('admin_init', [$this, 'register_settings_page']);
   }
@@ -87,7 +88,7 @@ class Hintr_Settings extends Hintr_Admin {
     }); ?>
 
     <div class="hintr-form-group">
-      <select id="hintr-post-types" name="hintr_settings[post_types][]" multiple>
+      <select class="hintr-select" id="hintr-post-types" name="hintr_settings[post_types][]" multiple>
         <?php foreach ($public_post_types as $post_type): ?>
           <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $selected_post_types), true); ?>>
             <?= $post_type->label ?>
@@ -100,20 +101,20 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function metadata_field() : void
   {
-    $selected_post_types = array_keys($hintr_settings['search_in'] ?? []);
+    $selected_post_types = array_keys($this->plugin_settings['search_in'] ?? []);
 
     foreach ($selected_post_types as $post_type) {
       if (post_type_exists($post_type)) {
 
         $post_type_object   = get_post_type_object($post_type);
         $meta_keys          = get_meta_keys($post_type);
-        $selected_meta_keys = $hintr_settings['search_in'][$post_type] ?? [];
+        $selected_meta_keys = $this->plugin_settings['search_in'][$post_type] ?? [];
         $input_id           = 'hintr-' . $post_type . '-metadata'; ?>
 
         <?php if ($meta_keys): ?>
           <div class="hintr-form-group">
             <label for="<?= $input_id ?>"><?= $post_type_object->label ?></label>
-            <select id="<?= $input_id ?>" name="hintr_settings[meta_keys][<?= $post_type ?>][]" multiple>
+            <select class="hintr-select" id="<?= $input_id ?>" name="hintr_settings[meta_keys][<?= $post_type ?>][]" multiple>
               <?php foreach ($meta_keys as $meta_key): ?>
                 <option value="<?= $meta_key ?>" <?php selected(in_array($meta_key, $selected_meta_keys), true); ?>>
                   <?= $meta_key ?>
