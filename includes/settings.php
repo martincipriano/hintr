@@ -99,6 +99,11 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function metadata_field() : void
   {
+    $selected_post_types = array_keys($hintr_settings['search_in'] ?? []);
+
+    foreach ($selected_post_types as $post_type) {
+      if (post_type_exists($post_type)) {}
+    }
   }
 }
 
