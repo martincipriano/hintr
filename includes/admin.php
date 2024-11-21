@@ -145,6 +145,12 @@ class Hintr_Admin {
   public function delete_json_post($post) : void
   {
     if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
+      $json_file = file_get_contents($this->plugin_uploads_path . $post->post_type . '.json');
+      $posts = json_decode($json_file, true);
+
+      unset($posts[$post->ID]);
+
+      file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
     }
   }
 }
