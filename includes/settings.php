@@ -149,6 +149,7 @@ class Hintr_Settings extends Hintr_Admin {
      */
 
     $post_types = $input['post_types'] ?? [];
+    $meta_keys = $input['meta_keys'] ?? [];
     $output = [
       'search_in' => []
     ];
@@ -159,6 +160,19 @@ class Hintr_Settings extends Hintr_Admin {
     foreach($post_types as $post_type) {
       $output['search_in'][$post_type] = [];
     }
+
+    // Now add the metadata keys to the post types
+    foreach($meta_keys as $post_type => $meta_keys) {
+      $output['search_in'][$post_type] = $input['meta_keys'][$post_type];
+    }
+
+    // Reindex the post types if the checkbox is checked
+    if (isset($input['reindex'])) {
+      $this->delete_json();
+      $this->create_json($output);
+    }
+
+    return $output;
   }
 }
 
