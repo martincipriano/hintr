@@ -126,6 +126,10 @@ class Hintr_Settings extends Hintr_Admin {
       }
     }
   }
+
+  public function reindex_field() : void
+  {
+  }
 }
 
 new Hintr_Settings;
