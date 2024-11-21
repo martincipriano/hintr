@@ -36,7 +36,7 @@ window.hintr.toggleSuggestions = function(e) {
     }
 
     let promises = postTypes.map(postType => {
-      return fetch(settings.uploadDir + postType + '.json')
+      return fetch(settings.uploads_url + postType + '.json')
         .then(response => response.json())
     })
 
@@ -47,7 +47,6 @@ window.hintr.toggleSuggestions = function(e) {
         }, {})
         data = Object.values(data)
         data = data.filter(function(item) {
-
           let condition = []
           let keyword = input.value.toLowerCase()
           let title = item.title.toLowerCase()
@@ -74,6 +73,13 @@ window.hintr.toggleSuggestions = function(e) {
           condition.push(title.includes(keyword))
 
           return condition.includes(true)
+        })
+
+        list.innerHTML = ''
+        data.forEach(item => {
+          list.innerHTML += hintrSettings.hint
+            .replace('title', item.title)
+            .replace('url', item.url)
         })
       })
 
