@@ -17,6 +17,9 @@ window.hintr.init = function() {
   })
 }
 
+window.hintr.toggleSuggestions = function(e) {
+}
+
 window.hintr.eventListeners = function() {
 }
 
