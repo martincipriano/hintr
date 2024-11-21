@@ -84,6 +84,17 @@ class Hintr_Settings extends Hintr_Admin {
     $public_post_types = array_filter($public_post_types, function($post_type) use ($excluded_post_types) {
       return !in_array($post_type->name, $excluded_post_types);
     }); ?>
+
+    <div class="hintr-form-group">
+      <select id="hintr-post-types" name="hintr_settings[post_types][]" multiple>
+        <?php foreach ($public_post_types as $post_type): ?>
+          <option value="<?= $post_type->name ?>" <?php selected(in_array($post_type->name, $selected_post_types), true); ?>>
+            <?= $post_type->label ?>
+          </option>
+        <?php endforeach; ?>
+      </select>
+      <p class="description"><?= $args['description'] ?></p>
+    </div>
   <?php }
 }
 
