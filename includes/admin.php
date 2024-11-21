@@ -105,6 +105,9 @@ class Hintr_Admin {
 
   public function delete_json($post_type = null) : void
   {
+    if (isset($post_type) && $post_type) {
+      unlink($this->plugin_uploads_path . $post_type . '.json');
+    }
   }
 }
 
