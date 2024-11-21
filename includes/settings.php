@@ -142,6 +142,23 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function validate_settings($input) : array
   {
+    /**
+     * To do:
+     *    - Delete the json file of the difference between the updated and old settings
+     *    - Update the json file of the difference between the updated and old settings
+     */
+
+    $post_types = $input['post_types'] ?? [];
+    $output = [
+      'search_in' => []
+    ];
+
+    // This first loop might look redundant,
+    // but it's necessary to ensure that the post types is set
+    // if there were no metadata keys selected for that post type
+    foreach($post_types as $post_type) {
+      $output['search_in'][$post_type] = [];
+    }
   }
 }
 
