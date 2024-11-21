@@ -117,8 +117,9 @@ class Hintr_Admin {
     }
   }
 
-  public function update_json_post() : void
+  public function update_json_post($post) : void
   {
+    $json_file = file_get_contents(ABSPATH . 'wp-content/uploads/hintr/' . $post->post_type . '.json');
   }
 }
 
