@@ -62,6 +62,16 @@ class Hintr_Settings {
     $args         = ['description' => _e('Select the default post metadata from which suggestions will be sourced.', 'hintr')];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
+
+    $field_id     = 'hintr_reindex';
+    $field_title  = _e('Re-index Post Types', 'hintr');
+    $field_cb     = [$this, 'reindex_field'];
+    $args         = [
+      'description' => _e('Trigger a rebuild of the JSON data files used for search indexing.', 'hintr'),
+      'note'        => _e('Rebuilding the JSON files may take time depending on the number of posts and post metadata.', 'hintr')
+    ];
+
+    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 }
 
