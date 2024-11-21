@@ -128,8 +128,17 @@ class Hintr_Settings extends Hintr_Admin {
   }
 
   public function reindex_field() : void
-  {
-  }
+  { ?>
+    <div class="hintr-form-group">
+      <div class="hintr-checkboxes">
+        <label for="hintr-reindex">
+          <input id="hintr-reindex" name="hintr_settings[reindex]" type="checkbox">
+          <?= $args['description'] ?>
+        </label>
+      </div>
+      <p class="description"><em><?= $args['note'] ?></em></p>
+    </div>
+  <?php }
 }
 
 new Hintr_Settings;
