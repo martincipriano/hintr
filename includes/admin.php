@@ -103,11 +103,13 @@ class Hintr_Admin {
     }
   }
 
-  public function delete_json($post_type = null) : void
+  public function delete_json($post_types = []) : void
   {
-    if (isset($post_type) && $post_type) {
-      if (file_exists($this->plugin_uploads_path . $post_type . '.json')) {
-        unlink($this->plugin_uploads_path . $post_type . '.json');
+    if ($post_types) {
+      foreach ($post_types as $post_type) {
+        if (file_exists($this->plugin_uploads_path . $post_type . '.json')) {
+          unlink($this->plugin_uploads_path . $post_type . '.json');
+        }
       }
     } else {
       $files = glob($this->plugin_uploads_path . '*.json');
