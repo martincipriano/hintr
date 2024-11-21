@@ -3,6 +3,7 @@
 class Hintr_Admin {
   protected $wordpress_uploads_path;
   protected $plugin_uploads_path;
+  protected $plugin_url;
   protected $plugin_path;
   protected $plugin_settings;
   protected $initial_plugin_settings;
@@ -11,6 +12,7 @@ class Hintr_Admin {
   {
     $this->wordpress_uploads_path = ABSPATH . 'wp-content/uploads/';
     $this->plugin_uploads_path = ABSPATH . 'wp-content/uploads/hintr/';
+    $this->plugin_url = plugin_dir_url(dirname(__FILE__));
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
     $this->plugin_settings = get_option('hintr_settings');
     $this->initial_plugin_settings = [
@@ -24,6 +26,11 @@ class Hintr_Admin {
     add_action('admin_notices', [$this, 'admin_notice']);
     add_action('save_post', [$this, 'save_post'], 10, 2);
     add_action('delete_post', [$this, 'delete_post']);
+  }
+
+  public function enqueue_scripts() : void
+  {
+    wp_enqueue_script('slim-select', $plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
   }
 
   public function activate() : void
