@@ -153,6 +153,20 @@ class Hintr_Admin {
       file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
     }
   }
+
+  public function save_post($post_id, $post) : void
+  {
+    $is_autosave = wp_is_post_autosave($post_id);
+    $is_revision = wp_is_post_revision($post_id);
+
+    if ( !$is_autosave && !$is_revision ) {
+      if ($post->post_status === 'publish') {
+        $this->update_json_post($post);
+      } else {
+        $this->delete_json_post($post);
+      }
+    }
+  }
 }
 
 new Hintr_Admin;
