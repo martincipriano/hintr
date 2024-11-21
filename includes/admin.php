@@ -24,6 +24,7 @@ class Hintr_Admin {
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
     add_action('admin_notices', [$this, 'admin_notice']);
+    add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     add_action('save_post', [$this, 'save_post'], 10, 2);
     add_action('delete_post', [$this, 'delete_post']);
   }
