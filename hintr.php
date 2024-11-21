@@ -11,3 +11,4 @@
 
 include_once 'includes/frontend.php';
 include_once 'includes/admin.php';
+include_once 'includes/settings.php';
