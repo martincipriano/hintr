@@ -82,6 +82,13 @@ window.hintr.toggleSuggestions = function(e) {
   }
 }
 
+window.hintr.hideSuggestions = function(e) {
+  let input = e.currentTarget
+  let list = input.nextElementSibling
+
+  list.classList.remove('show')
+}
+
 window.hintr.eventListeners = function() {
 }
 
