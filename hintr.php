@@ -9,6 +9,6 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-include_once 'includes/frontend.php';
-include_once 'includes/admin.php';
-include_once 'includes/settings.php';
+include_once plugin_dir_path(__FILE__) . 'includes/frontend.php';
+include_once plugin_dir_path(__FILE__) . 'includes/admin.php';
+include_once plugin_dir_path(__FILE__) . 'includes/settings.php';
