@@ -40,6 +40,13 @@ class Hintr_Settings {
     $validation_callback = [$this, 'validate_settings'];
 
     register_setting($option_group, $option_name, $validation_callback);
+
+    $section_id = 'hintr_settings_page';
+    $title = 'Search Keywords In';
+    $callback = '';
+    $page = 'hintr'; // Should be the same as the slug used in add_options_page
+
+    add_settings_section($section_id, $title, $callback, $page);
   }
 }
 
