@@ -94,6 +94,12 @@ window.hintr.eventListeners = function() {
 
   inputs.forEach(input => {
     input.addEventListener('keyup', window.hintr.toggleSuggestions)
+
+    document.addEventListener('click', function(e) {
+      if (input !== e.target && input.nextElementSibling !== e.target) {
+        input.nextElementSibling.classList.remove('show')
+      }
+    })
   })
 }
 
