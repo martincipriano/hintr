@@ -144,6 +144,8 @@ class Hintr_Admin {
 
   public function delete_json_post($post) : void
   {
+    if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
+    }
   }
 }
 
