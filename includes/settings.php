@@ -22,7 +22,7 @@ class Hintr_Settings {
     ?>
     <div class="wrap">
       <h1><?= _e('Hintr Options', 'hintr'); ?></h1>
-      <form method="post" action="options.php">
+      <form action="options.php" method="post">
         <?php
           settings_fields('hintr_settings');
           do_settings_sections('hintr');
@@ -31,6 +31,15 @@ class Hintr_Settings {
       </form>
     </div>
     <?php
+  }
+
+  public function register_settings_page() : void
+  {
+    $option_group = 'hintr_settings';
+    $option_name = 'hintr_settings';
+    $validation_callback = [$this, 'validate_settings'];
+
+    register_setting($option_group, $option_name, $validation_callback);
   }
 }
 
