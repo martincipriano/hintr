@@ -18,22 +18,6 @@ class Hintr_Settings extends Hintr_Admin {
     add_options_page($page_title, $menu_title, $capability, $slug, $callback);
   }
 
-  public function settings_page() : void
-  {
-    ?>
-    <div class="wrap">
-      <h1><?= _e('Hintr Options', 'hintr'); ?></h1>
-      <form action="options.php" method="post">
-        <?php
-          settings_fields('hintr_settings');
-          do_settings_sections('hintr');
-          submit_button('Save Settings');
-        ?>
-      </form>
-    </div>
-    <?php
-  }
-
   public function register_settings_page() : void
   {
     $page       = 'hintr'; // Should be the same as the slug used in add_options_page
@@ -73,6 +57,22 @@ class Hintr_Settings extends Hintr_Admin {
     ];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
+  }
+
+  public function settings_page() : void
+  {
+    ?>
+    <div class="wrap">
+      <h1><?= _e('Hintr Options', 'hintr'); ?></h1>
+      <form action="options.php" method="post">
+        <?php
+          settings_fields('hintr_settings');
+          do_settings_sections('hintr');
+          submit_button('Save Settings');
+        ?>
+      </form>
+    </div>
+    <?php
   }
 
   public function post_type_field() : void
