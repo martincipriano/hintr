@@ -107,7 +107,7 @@ class Hintr_Settings extends Hintr_Admin {
       if (post_type_exists($post_type)) {
 
         $post_type_object   = get_post_type_object($post_type);
-        $meta_keys          = $this->get_meta_keys($post_type);
+        $meta_keys          = get_meta_keys($post_type);
         $selected_meta_keys = $this->plugin_settings['search_in'][$post_type] ?? [];
         $input_id           = 'hintr-' . $post_type . '-metadata'; ?>
 
