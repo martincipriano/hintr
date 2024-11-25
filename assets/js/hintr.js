@@ -147,6 +147,12 @@ window.hintr.eventListeners = function() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+
+  (async () => {
+    const posts = await window.hintr.createLocalStorage()
+    console.log('Posts:', posts);
+  })()
+
   window.hintr.init()
   window.hintr.eventListeners()
 })
