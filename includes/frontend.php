@@ -24,17 +24,19 @@ class Hintr {
 
     wp_localize_script('hintr', 'hintrSettings', array_merge([
       'hint' => '<li><a class="hint" href="url">title</a></li>',
+      'ajax_url' => admin_url('admin-ajax.php'),
       'uploads_url' => $this->plugin_uploads_url
     ], $this->plugin_settings));
   }
 
-  public function script_attribute($tag, $handle, $src) {
+  public function script_attribute($tag, $handle, $src) : void
+  {
     $async_handles = [];
     if (in_array($handle, $async_handles)) {
       return str_replace('<script ', '<script async ', $tag);
     }
     return $tag;
-  }
+  } 
 }
 
 new Hintr;
