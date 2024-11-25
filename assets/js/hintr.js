@@ -30,6 +30,29 @@ window.hintr.createLocalStorage = async () => {
   if (cachedPosts) {
     return JSON.parse(cachedPosts)
   }
+
+  try {
+    do {
+      const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
+      const data = await response.json()
+
+      if (response.ok) {
+        posts = posts.concat(data.posts)
+        totalPages = data.total_pages
+      } else {
+        break
+      }
+
+      page++
+    } while (page <= totalPages)
+
+    localStorage.setItem('hintr', JSON.stringify(posts))
+
+    return posts
+
+  } catch (error) {
+    return null
+  }
 }
 
 window.hintr.toggleSuggestions = function(e) {
