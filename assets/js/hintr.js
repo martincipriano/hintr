@@ -55,6 +55,10 @@ window.hintr.createLocalStorage = async () => {
   }
 }
 
+window.hintr.deleteLocalStorage = () => {
+  localStorage.removeItem('hintr')
+}
+
 window.hintr.toggleSuggestions = function(e) {
   let input = e.currentTarget
   let suggestions = input.nextElementSibling
