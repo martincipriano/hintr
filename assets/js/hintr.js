@@ -25,6 +25,11 @@ window.hintr.createLocalStorage = async () => {
   let page = 1
   let posts = []
   let totalPages = 1
+
+  const cachedPosts = localStorage.getItem('hintr')
+  if (cachedPosts) {
+    return JSON.parse(cachedPosts)
+  }
 }
 
 window.hintr.toggleSuggestions = function(e) {
