@@ -142,7 +142,10 @@ class Hintr_Settings extends Hintr_Admin {
 
     // Now add the metadata keys to the post types
     foreach($meta_keys as $post_type => $meta_keys) {
-      $output['search_in'][$post_type] = $input['meta_keys'][$post_type];
+      if (isset($output['search_in'][$post_type])) {
+        $output['search_in'][$post_type] = $input['meta_keys'][$post_type];
+      }
+      
     }
 
     return $output;
