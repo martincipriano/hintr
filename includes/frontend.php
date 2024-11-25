@@ -14,7 +14,7 @@ class Hintr {
     $this->plugin_settings = get_option('hintr_settings');
 
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-
+    add_action('rest_api_init', [$this, 'register_routes']);
   }
 
   public function enqueue_scripts() : void
@@ -27,6 +27,15 @@ class Hintr {
       'ajax_url' => admin_url('admin-ajax.php'),
       'uploads_url' => $this->plugin_uploads_url
     ], $this->plugin_settings));
+  }
+
+  public function register_routes() : void
+  {
+    register_rest_route('hintr/v1', '/posts', [
+      'methods'             => 'GET',
+      'callback'            => [$this, 'get_posts'],
+      'permission_callback' => '__return_true'
+    ]);
   }
 }
 
