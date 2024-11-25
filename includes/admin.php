@@ -23,10 +23,7 @@ class Hintr_Admin {
     ];
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
-    add_action('admin_notices', [$this, 'admin_notice']);
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-    add_action('save_post', [$this, 'save_post'], 10, 2);
-    add_action('delete_post', [$this, 'delete_post']);
   }
 
   public function enqueue_scripts() : void
@@ -56,138 +53,11 @@ class Hintr_Admin {
     update_option('hintr_settings', $this->initial_plugin_settings);
   }
 
-  public function admin_notice() : void
-  {
-    // Check if the uploads directory exists and is writable
-    // If it doesn't, display an error message
-    if (!is_writable($this->wordpress_uploads_path)) {
-      echo '<div class="error"><p>Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.</p></div>';
-    }
-  }
-
   public function get_meta_keys($post_type) : array
   {
     global $wpdb;
     $query = $wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type);
     return $wpdb->get_col($query);
-  }
-
-  public function create_json($settings = []) : void
-  {
-    if (!$settings) {
-      $settings = $this->plugin_settings;
-    }
-
-    $posts_per_batch = 100;
-
-    foreach ($settings['search_in'] as $post_type => $meta_keys) {
-      $post_type_data = [];
-      $page = 1;
-
-      do {
-        $posts = get_posts([
-          'post_status' => 'publish',
-          'post_type' => $post_type,
-          'posts_per_page' => $posts_per_batch,
-          'paged' => $page
-        ]);
-
-        foreach ($posts as $post) {
-
-          $post_type_data[$post->ID] = [
-            'metadata' => [],
-            'post_type' => $post->post_type,
-            'title' => $post->post_title,
-            'url' => get_permalink($post)
-          ];
-
-          foreach ($meta_keys as $meta_key) {
-            $metadata = get_post_meta($post->ID, $meta_key, false);
-            $post_type_data[$post->ID]['metadata'][$meta_key] = implode(',', $metadata);
-          }
-        }
-
-        $page++;
-
-      } while (count($posts) === $posts_per_batch);
-
-      file_put_contents($this->plugin_uploads_path . $post_type . '.json', json_encode($post_type_data));
-    }
-  }
-
-  public function delete_json($post_types = []) : void
-  {
-    if ($post_types) {
-      foreach ($post_types as $post_type) {
-        if (file_exists($this->plugin_uploads_path . $post_type . '.json')) {
-          unlink($this->plugin_uploads_path . $post_type . '.json');
-        }
-      }
-    } else {
-      $files = glob($this->plugin_uploads_path . '*.json');
-      foreach ($files as $file) {
-        unlink($file);
-      }
-    }
-  }
-
-  /**
-   * To do:
-   *  - If the post doesn't exist in the json file, add it
-   */
-  public function update_json_post($post) : void
-  {
-    if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
-      $json_file = file_get_contents($this->plugin_uploads_path . $post->post_type . '.json');
-      $posts = json_decode($json_file, true);
-
-      $posts[$post->ID] = [
-        'metadata' => [],
-        'post_type' => $post->post_type,
-        'title' => $post->post_title,
-        'url' => get_permalink($post)
-      ];
-
-      if ($this->plugin_settings['search_in'][$post->post_type]) {
-        foreach ($this->plugin_settings['search_in'][$post->post_type] as $meta_key) {
-          $metadata = get_post_meta($post->ID, $meta_key, false);
-          $posts[$post->ID]['metadata'][$meta_key] = implode(',', $metadata);
-        }
-      }
-
-      file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
-    }
-  }
-
-  public function delete_json_post($post) : void
-  {
-    if (file_exists($this->plugin_uploads_path . $post->post_type . '.json')) {
-      $json_file = file_get_contents($this->plugin_uploads_path . $post->post_type . '.json');
-      $posts = json_decode($json_file, true);
-
-      unset($posts[$post->ID]);
-
-      file_put_contents($this->plugin_uploads_path . $post->post_type . '.json', json_encode($posts));
-    }
-  }
-
-  public function save_post($post_id, $post) : void
-  {
-    $is_autosave = wp_is_post_autosave($post_id);
-    $is_revision = wp_is_post_revision($post_id);
-
-    if ( !$is_autosave && !$is_revision ) {
-      if ($post->post_status === 'publish') {
-        $this->update_json_post($post);
-      } else {
-        $this->delete_json_post($post);
-      }
-    }
-  }
-
-  public function delete_post($post) : void
-  {
-    $this->delete_json_post($post);
   }
 }
 
