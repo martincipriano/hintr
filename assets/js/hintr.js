@@ -17,8 +17,14 @@ window.hintr.init = function() {
   })
 }
 
-window.hintr.createLocalStorage = function() {
+window.hintr.createLocalStorage = async () => {
 
+  const endpoint = '/wp-json/hintr/v1/posts'
+  const perPage = 100
+
+  let page = 1
+  let posts = []
+  let totalPages = 1
 }
 
 window.hintr.toggleSuggestions = function(e) {
