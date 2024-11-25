@@ -169,10 +169,13 @@ class Hintr_Settings extends Hintr_Admin {
     }
 
     // Reindex the post types if the checkbox is checked
-    // if (isset($input['reindex'])) {
-    //   $this->delete_json();
-    //   $this->create_json($output);
-    // }
+    if (isset($input['reindex'])) {
+      add_action('update_option_hintr_settings', function () { ?>
+        <script>
+          localStorage.removeItem("hintr");
+        </script>
+      <?php });
+    }
 
     return $output;
   }
