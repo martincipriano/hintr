@@ -14,6 +14,7 @@ class Hintr {
     $this->plugin_settings = get_option('hintr_settings');
 
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+    add_filter('script_loader_tag', [$this, 'script_attribute'], 10, 3);
   }
 
   public function enqueue_scripts() : void
@@ -25,6 +26,14 @@ class Hintr {
       'hint' => '<li><a class="hint" href="url">title</a></li>',
       'uploads_url' => $this->plugin_uploads_url
     ], $this->plugin_settings));
+  }
+
+  public function script_attribute($tag, $handle, $src) {
+    $async_handles = [];
+    if (in_array($handle, $async_handles)) {
+      return str_replace('<script ', '<script async ', $tag);
+    }
+    return $tag;
   }
 }
 
