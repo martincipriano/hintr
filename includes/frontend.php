@@ -37,6 +37,49 @@ class Hintr {
       'permission_callback' => '__return_true'
     ]);
   }
+
+  public function get_posts(WP_REST_Request $request) {
+    $settings = $this->plugin_settings;
+    $post_type = array_keys($settings['search_in']);
+    $per_page  = $request->get_param('per_page') ?? 100;
+    $page      = $request->get_param('page') ?? 1;
+
+    $query = new \WP_Query([
+      'post_status'    => 'publish',
+      'post_type'      => $post_type,
+      'posts_per_page' => (int) $per_page,
+      'paged'          => (int) $page,
+      'fields'         => 'ids',
+    ]);
+
+    $posts = [];
+
+    while ($query->have_posts()) {
+      $query->the_post();
+
+      $metadata = [];
+      if (isset($settings['search_in'][get_post_type()])) {
+        foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
+          $metadata[$meta_key] = implode(', ', get_post_meta(get_the_ID(), $meta_key, false));
+        }
+      }
+
+      $posts[] = [
+        'id'        => get_the_ID(),
+        'metadata'  => $metadata,
+        'title'     => get_the_title(),
+        'type'      => get_post_type(),
+        'url'       => get_permalink()
+      ];
+    }
+
+    return new WP_REST_Response([
+      'posts'       => $posts,
+      'total_posts' => $query->found_posts,
+      'total_pages' => $query->max_num_pages,
+      'current_page' => (int) $page,
+    ], 200);
+  }
 }
 
 new Hintr;
