@@ -17,6 +17,10 @@ window.hintr.init = function() {
   })
 }
 
+window.hintr.createLocalStorage = function() {
+
+}
+
 window.hintr.toggleSuggestions = function(e) {
   let input = e.currentTarget
   let suggestions = input.nextElementSibling
@@ -26,7 +30,6 @@ window.hintr.toggleSuggestions = function(e) {
   let postTypes = Object.keys(settings.search_in)
 
   if (input.value.length > 2) {
-
     if (suggestions.classList.contains('show') === false) {
       suggestions.classList.add('show')
     }
@@ -55,7 +58,7 @@ window.hintr.toggleSuggestions = function(e) {
           if (settingsOverride) {
 
             if (typeof settingsOverride.search_in[item.post_type] === 'undefined')
-              return;
+              return
 
             Object.keys(metadata).forEach(key => {
               if (!settingsOverride.search_in[item.post_type].includes(key)) {
