@@ -49,16 +49,6 @@ class Hintr_Settings extends Hintr_Admin {
     $args         = ['description' => 'Select the default post metadata from which suggestions will be sourced.'];
 
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
-
-    $field_id     = 'hintr_reindex';
-    $field_title  = 'Re-index Post Types';
-    $field_cb     = [$this, 'reindex_field'];
-    $args         = [
-      'description' => 'Trigger a rebuild of the JSON data files used for search indexing.',
-      'note'        => 'Rebuilding the JSON files may take time depending on the number of posts and post metadata.'
-    ];
-
-    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 
   public function settings_page() : void
@@ -129,19 +119,6 @@ class Hintr_Settings extends Hintr_Admin {
     }
   }
 
-  public function reindex_field($args) : void
-  { ?>
-    <div class="hintr-form-group">
-      <div class="hintr-checkboxes">
-        <label for="hintr-reindex">
-          <input id="hintr-reindex" name="hintr_settings[reindex]" type="checkbox">
-          <?= $args['description'] ?>
-        </label>
-      </div>
-      <p class="description"><em><?= $args['note'] ?></em></p>
-    </div>
-  <?php }
-
   public function validate_settings($input) : array
   {
     /**
@@ -166,15 +143,6 @@ class Hintr_Settings extends Hintr_Admin {
     // Now add the metadata keys to the post types
     foreach($meta_keys as $post_type => $meta_keys) {
       $output['search_in'][$post_type] = $input['meta_keys'][$post_type];
-    }
-
-    // Reindex the post types if the checkbox is checked
-    if (isset($input['reindex'])) {
-      add_action('update_option_hintr_settings', function () { ?>
-        <script>
-          localStorage.removeItem("hintr");
-        </script>
-      <?php });
     }
 
     return $output;
