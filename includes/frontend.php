@@ -14,6 +14,8 @@ class Hintr {
     $this->plugin_settings = get_option('hintr_settings');
 
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
+    add_action('wp_ajax_get_hintr_posts', [$this, 'get_hintr_posts']);
+    add_action('wp_ajax_nopriv_get_hintr_posts', [$this, 'get_hintr_posts']);
   }
 
   public function enqueue_scripts() : void
@@ -26,6 +28,11 @@ class Hintr {
       'ajax_url' => admin_url('admin-ajax.php'),
       'uploads_url' => $this->plugin_uploads_url
     ], $this->plugin_settings));
+  }
+
+  public function get_hintr_posts() : void
+  {
+
   }
 }
 
