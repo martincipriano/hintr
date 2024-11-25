@@ -18,7 +18,6 @@ window.hintr.init = function() {
 }
 
 window.hintr.createLocalStorage = async () => {
-
   const endpoint = '/wp-json/hintr/v1/posts'
   const perPage = 100
 
@@ -26,9 +25,22 @@ window.hintr.createLocalStorage = async () => {
   let posts = []
   let totalPages = 1
 
+  const hashData = (data) => {
+    return new TextEncoder()
+      .encode(JSON.stringify(data))
+      .reduce((hash, byte) => (hash = ((hash << 5) - hash + byte) | 0), 0)
+  }
+
   const cachedPosts = localStorage.getItem('hintr')
+
   if (cachedPosts) {
-    return JSON.parse(cachedPosts)
+    const cachedData = JSON.parse(cachedPosts)
+    const cachedHash = localStorage.getItem('hintrHash')
+    const newHash = hashData(cachedData)
+
+    if (cachedHash === newHash) {
+      return cachedData
+    }
   }
 
   try {
@@ -47,16 +59,13 @@ window.hintr.createLocalStorage = async () => {
     } while (page <= totalPages)
 
     localStorage.setItem('hintr', JSON.stringify(posts))
+    localStorage.setItem('hintrHash', hashData(posts))
 
     return posts
 
   } catch (error) {
     return null
   }
-}
-
-window.hintr.deleteLocalStorage = () => {
-  localStorage.removeItem('hintr')
 }
 
 window.hintr.toggleSuggestions = function(e) {
@@ -76,53 +85,47 @@ window.hintr.toggleSuggestions = function(e) {
       postTypes = Object.keys(settingsOverride.search_in)
     }
 
-    let promises = postTypes.map(postType => {
-      return fetch(settings.uploads_url + postType + '.json')
-        .then(response => response.json())
-    })
+    const cachedPosts = localStorage.getItem('hintr')
 
-    Promise.all(promises)
-      .then(data => {
-        data = data.reduce((acc, innerObj) => {
-          return { ...acc, ...innerObj }
-        }, {})
-        data = Object.values(data)
-        data = data.filter(function(item) {
-          let condition = []
-          let keyword = input.value.toLowerCase()
-          let title = item.title.toLowerCase()
-          let metadata = item.metadata
+    if (cachedPosts) {
+      let posts = JSON.parse(cachedPosts)
 
-          if (settingsOverride) {
+      posts = posts.filter(function(item) {
+        let condition = []
+        let keyword = input.value.toLowerCase()
+        let title = item.title.toLowerCase()
+        let metadata = item.metadata
 
-            if (typeof settingsOverride.search_in[item.post_type] === 'undefined')
-              return
+        if (settingsOverride) {
+          if (typeof settingsOverride.search_in[item.post_type] === 'undefined') return
 
-            Object.keys(metadata).forEach(key => {
-              if (!settingsOverride.search_in[item.post_type].includes(key)) {
-                delete metadata[key]
-              }
-            })
-          }
-
-          for (let key in metadata) {
-            if (metadata.hasOwnProperty(key)) {
-              condition.push(metadata[key].toLowerCase().includes(keyword))
+          Object.keys(metadata).forEach(key => {
+            if (!settingsOverride.search_in[item.post_type].includes(key)) {
+              delete metadata[key]
             }
+          })
+        }
+
+        for (let key in metadata) {
+          if (metadata.hasOwnProperty(key)) {
+            condition.push(metadata[key].toLowerCase().includes(keyword))
           }
+        }
 
-          condition.push(title.includes(keyword))
+        condition.push(title.includes(keyword))
 
-          return condition.includes(true)
-        })
-
-        suggestions.innerHTML = ''
-        data.forEach(item => {
-          suggestions.innerHTML += hintrSettings.hint
-            .replace('title', item.title)
-            .replace('url', item.url)
-        })
+        return condition.includes(true)
       })
+
+      suggestions.innerHTML = ''
+      posts.forEach(item => {
+        suggestions.innerHTML += hintrSettings.hint
+          .replace('title', item.title)
+          .replace('url', item.url)
+      })
+    } else {
+      console.error('No posts found in localStorage')
+    }
 
   } else {
     suggestions.classList.remove('show')
@@ -154,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   (async () => {
     const posts = await window.hintr.createLocalStorage()
-    console.log('Posts:', posts);
+    console.log('search_in:', posts)
   })()
 
   window.hintr.init()
