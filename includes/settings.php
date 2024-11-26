@@ -121,12 +121,6 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function validate_settings($input) : array
   {
-    /**
-     * To do:
-     *    - Delete the json file of the difference between the updated and old settings
-     *    - Update the json file of the difference between the updated and old settings
-     */
-
     $post_types = $input['post_types'] ?? [];
     $meta_keys = $input['meta_keys'] ?? [];
     $output = [

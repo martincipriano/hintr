@@ -1,8 +1,6 @@
 <?php
 
 class Hintr_Admin {
-  protected $wordpress_uploads_path;
-  protected $plugin_uploads_path;
   protected $plugin_url;
   protected $plugin_path;
   protected $plugin_settings;
@@ -10,8 +8,6 @@ class Hintr_Admin {
 
   public function __construct()
   {
-    $this->wordpress_uploads_path = ABSPATH . 'wp-content/uploads/';
-    $this->plugin_uploads_path = ABSPATH . 'wp-content/uploads/hintr/';
     $this->plugin_url = plugin_dir_url(dirname(__FILE__));
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
     $this->plugin_settings = get_option('hintr_settings');
@@ -37,19 +33,6 @@ class Hintr_Admin {
 
   public function activate() : void
   {
-    // Check if the uploads directory exists and is writable
-    // If it doesn't, display an error message and stop the activation process
-    if (!is_writable($this->wordpress_uploads_path)) {
-      wp_die('Please ensure that the "uploads" directory exists in the "wp-content" folder and has the necessary write permissions.');
-    }
-
-    // If the uploads directory exists and is writable,
-    // create the hintr directory in which we will store the json files needed for the sarch
-    if (!file_exists($this->plugin_uploads_path)) {
-      mkdir($this->plugin_uploads_path);
-    }
-
-    // Create the plugin settings in the wp_options table
     update_option('hintr_settings', $this->initial_plugin_settings);
   }
 
