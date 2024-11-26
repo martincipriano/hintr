@@ -44,6 +44,8 @@ class Hintr_Admin {
   {
     global $wpdb;
 
+    $post_type = sanitize_key($post_type);
+
     if (!post_type_exists($post_type)) {
       return [];
     }
