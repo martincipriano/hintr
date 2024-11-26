@@ -21,8 +21,14 @@ class Hintr {
 
   public function enqueue_scripts() : void
   {
-    wp_enqueue_style('hintr', $this->plugin_url . 'assets/css/hintr.css', [], (filemtime($this->plugin_path . 'assets/css/hintr.css') ? filemtime($this->plugin_path . 'assets/css/hintr.css') : '1.0.0'), 'all');
-    wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], (filemtime($this->plugin_path . 'assets/js/hintr.js') ? filemtime($this->plugin_path . 'assets/js/hintr.js') : '1.0.0'), true);
+    $css_path = $this->plugin_path . 'assets/css/hintr.css';
+    $css_version = file_exists($css_path) ? filemtime($css_path) : '1.0.0';
+
+    $js_path = $this->plugin_path . 'assets/js/hintr.js';
+    $js_version = file_exists($js_path) ? filemtime($js_path) : '1.0.0';
+
+    wp_enqueue_style('hintr', $this->plugin_url . 'assets/css/hintr.css', [], $css_version, 'all');
+    wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], $js_version, true);
 
     wp_localize_script('hintr', 'hintrSettings', array_merge([
       'hint' => '<li><a class="hint" href="url">title</a></li>',
@@ -42,8 +48,8 @@ class Hintr {
   public function get_posts(WP_REST_Request $request) {
     $settings = $this->plugin_settings;
     $post_type = array_keys($settings['search_in']);
-    $per_page  = $request->get_param('per_page') ?? 100;
-    $page      = $request->get_param('page') ?? 1;
+    $per_page  = max(1, min(100, intval($request->get_param('per_page') ?? 100)));
+    $page      = max(1, intval($request->get_param('page') ?? 1));
 
     $query = new \WP_Query([
       'post_status'    => 'publish',
@@ -61,16 +67,16 @@ class Hintr {
       $metadata = [];
       if (isset($settings['search_in'][get_post_type()])) {
         foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
-          $metadata[$meta_key] = implode(', ', get_post_meta(get_the_ID(), $meta_key, false));
+          $metadata[$meta_key] = implode(', ', array_map('esc_html', get_post_meta(get_the_ID(), $meta_key, false)));
         }
       }
 
       $posts[] = [
         'id'        => get_the_ID(),
         'metadata'  => $metadata,
-        'title'     => get_the_title(),
-        'type'      => get_post_type(),
-        'url'       => get_permalink()
+        'title'     => esc_html(get_the_title()),
+        'type'      => esc_html(get_post_type()),
+        'url'       => esc_url(get_permalink())
       ];
     }
 

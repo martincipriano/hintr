@@ -26,16 +26,19 @@ class Hintr_Admin {
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
   }
 
-  protected function enqueue_scripts() : void
+  public function enqueue_scripts() : void
   {
-    $admin_css_version = file_exists($this->plugin_path . 'assets/css/hintr-admin.css') ? filemtime($this->plugin_path . 'assets/css/hintr-admin.css') : '1.0.0';
-    $admin_js_version = file_exists($this->plugin_path . 'assets/js/hintr-admin.js') ? filemtime($this->plugin_path . 'assets/js/hintr-admin.js') : '1.0.0';
+    $css_path = $this->plugin_path . 'assets/css/hintr-admin.css';
+    $css_version = file_exists($css_path) ? filemtime($css_path) : '1.0.0';
+
+    $js_path = $this->plugin_path . 'assets/js/hintr-admin.js';
+    $js_version = file_exists($js_path) ? filemtime($js_path) : '1.0.0';
 
     wp_enqueue_style('slim-select', $this->plugin_url . 'assets/css/slimselect.min.css', [], '2.9.2');
-    wp_enqueue_style('hintr-admin', $this->plugin_url . 'assets/css/hintr-admin.css', [], $admin_css_version);
+    wp_enqueue_style('hintr-admin', $this->plugin_url . 'assets/css/hintr-admin.css', [], $css_version);
 
     wp_enqueue_script('slim-select', $this->plugin_url . 'assets/js/slimselect.min.js', [], '2.9.2', true);
-    wp_enqueue_script('hintr-admin', $this->plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], $admin_js_version, true);
+    wp_enqueue_script('hintr-admin', $this->plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], $js_version, true);
   }
 
   protected function activate() : void
