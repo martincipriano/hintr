@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('ABSPATH')) {
+  exit;
+}
+
 class Hintr {
   protected $plugin_url;
   protected $plugin_path;
@@ -17,8 +21,8 @@ class Hintr {
 
   public function enqueue_scripts() : void
   {
-    wp_enqueue_style('hintr', $this->plugin_url . 'assets/css/hintr.css', [], filemtime($this->plugin_path . 'assets/css/hintr.css'), 'all');
-    wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], filemtime($this->plugin_path . 'assets/js/hintr.js'), true);
+    wp_enqueue_style('hintr', $this->plugin_url . 'assets/css/hintr.css', [], (filemtime($this->plugin_path . 'assets/css/hintr.css') ? filemtime($this->plugin_path . 'assets/css/hintr.css') : '1.0.0'), 'all');
+    wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], (filemtime($this->plugin_path . 'assets/js/hintr.js') ? filemtime($this->plugin_path . 'assets/js/hintr.js') : '1.0.0'), true);
 
     wp_localize_script('hintr', 'hintrSettings', array_merge([
       'hint' => '<li><a class="hint" href="url">title</a></li>',
