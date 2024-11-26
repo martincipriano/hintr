@@ -102,9 +102,11 @@ window.hintr.toggleSuggestions = function(e) {
           let title = item.title.toLowerCase()
           let metadata = item.metadata
 
-          if (settingsOverride) {
-            if (typeof settingsOverride.search_in[item.post_type] === 'undefined') return
+          if (!postTypes.includes(item.type)) {
+            return false
+          }
 
+          if (settingsOverride && settingsOverride.search_in[item.post_type]) {
             Object.keys(metadata).forEach(key => {
               if (!settingsOverride.search_in[item.post_type].includes(key)) {
                 delete metadata[key]
@@ -137,7 +139,6 @@ window.hintr.toggleSuggestions = function(e) {
     }
   }, 300)
 }
-
 
 window.hintr.hideSuggestions = function(e) {
   let input = e.currentTarget
