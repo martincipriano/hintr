@@ -40,7 +40,7 @@ class Hintr_Admin {
     update_option('hintr_settings', $this->initial_plugin_settings);
   }
 
-  protected function get_meta_keys($post_type = []) : array
+  protected function get_meta_keys($post_type = '') : array
   {
     global $wpdb;
 
