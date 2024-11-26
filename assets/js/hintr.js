@@ -68,68 +68,76 @@ window.hintr.createLocalStorage = async () => {
 }
 
 window.hintr.toggleSuggestions = function(e) {
-  let input = e.currentTarget
-  let suggestions = input.nextElementSibling
-
-  let settings = hintrSettings 
-  let settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false 
-  let postTypes = Object.keys(settings.search_in)
-
-  if (input.value.length > 2) {
-    if (suggestions.classList.contains('show') === false) {
-      suggestions.classList.add('show')
-    }
-
-    if (settingsOverride) {
-      postTypes = Object.keys(settingsOverride.search_in)
-    }
-
-    const cachedPosts = localStorage.getItem('hintr')
-
-    if (cachedPosts) {
-      let posts = JSON.parse(cachedPosts)
-
-      posts = posts.filter(function(item) {
-        let condition = []
-        let keyword = input.value.toLowerCase()
-        let title = item.title.toLowerCase()
-        let metadata = item.metadata
-
-        if (settingsOverride) {
-          if (typeof settingsOverride.search_in[item.post_type] === 'undefined') return
-
-          Object.keys(metadata).forEach(key => {
-            if (!settingsOverride.search_in[item.post_type].includes(key)) {
-              delete metadata[key]
-            }
-          })
-        }
-
-        for (let key in metadata) {
-          if (metadata.hasOwnProperty(key)) {
-            condition.push(metadata[key].toLowerCase().includes(keyword))
-          }
-        }
-
-        condition.push(title.includes(keyword))
-
-        return condition.includes(true)
-      })
-
-      suggestions.innerHTML = ''
-      posts.forEach(item => {
-        suggestions.innerHTML += hintrSettings.hint
-          .replace('title', item.title)
-          .replace('url', item.url)
-      })
-    } else {
-      console.error('No posts found in localStorage')
-    }
-
-  } else {
-    suggestions.classList.remove('show')
+  if (!window.hintr.toggleSuggestions.timer) {
+    window.hintr.toggleSuggestions.timer = null
   }
+
+  clearTimeout(window.hintr.toggleSuggestions.timer)
+
+  let input = e.currentTarget
+
+  window.hintr.toggleSuggestions.timer = setTimeout(() => {
+    let suggestions = input.nextElementSibling
+    let settings = hintrSettings
+    let settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false
+    let postTypes = Object.keys(settings.search_in)
+
+    if (input.value.length > 2) {
+      if (!suggestions.classList.contains('show')) {
+        suggestions.classList.add('show')
+      }
+
+      if (settingsOverride) {
+        postTypes = Object.keys(settingsOverride.search_in)
+      }
+
+      const cachedPosts = localStorage.getItem('hintr')
+
+      if (cachedPosts) {
+        let posts = JSON.parse(cachedPosts)
+
+        posts = posts.filter(function (item) {
+          let condition = []
+          let keyword = input.value.toLowerCase()
+          let title = item.title.toLowerCase()
+          let metadata = item.metadata
+
+          if (settingsOverride) {
+            if (typeof settingsOverride.search_in[item.post_type] === 'undefined') return
+
+            Object.keys(metadata).forEach(key => {
+              if (!settingsOverride.search_in[item.post_type].includes(key)) {
+                delete metadata[key]
+              }
+            })
+          }
+
+          for (let key in metadata) {
+            if (metadata.hasOwnProperty(key)) {
+              condition.push(metadata[key].toLowerCase().includes(keyword))
+            }
+          }
+
+          condition.push(title.includes(keyword))
+
+          return condition.includes(true)
+        })
+
+        suggestions.innerHTML = ''
+        posts.forEach(item => {
+          suggestions.innerHTML += hintrSettings.hint
+            .replace('title', item.title)
+            .replace('url', item.url)
+        })
+      } else {
+        console.error('No posts found in localStorage')
+      }
+    } else {
+      suggestions.classList.remove('show')
+    }
+  }, 300)
 }
+
 
 window.hintr.hideSuggestions = function(e) {
   let input = e.currentTarget
