@@ -1,6 +1,6 @@
 === Hintr ===
-Contributors: yourusername
-Tags: search, suggestion, admin settings, post types, metadata
+Contributors: martincipriano
+Tags: search, suggestion
 Requires at least: 5.5
 Tested up to: 6.4
 Requires PHP: 7.4
@@ -12,13 +12,14 @@ Enhance your WordPress site's search functionality by offering search suggestion
 
 == Description ==
 
-**Hintr** is a WordPress plugin designed to improve search experiences by providing search suggestions.  
-Easily configure which post types and metadata are used as the source for suggestions directly from the WordPress admin panel.
+**Hintr** is a WordPress plugin designed to improve search by providing lightning-fast suggestions.
+Easily configure what post types to search in. Aside from searching the keyword from the post title, configure to search the keyword in specific post metadata like price, sku, serial number, etc.
 
 **Features:**
-- Select specific post types for search suggestions.
-- Fine-tune search suggestions by choosing metadata fields.
-- Lightweight and highly configurable.
+- Select the post type to source suggestions effortlessly.
+- Refine search suggestions by targeting keywords within a post's metadata.
+- Customize behavior for different search input fields using data attributes.
+- Lightweight and highly configurable, ensuring seamless integration.
 
 This plugin is perfect for blogs, e-commerce sites, or any WordPress site that can benefit from enhanced search capabilities.
 
@@ -32,16 +33,19 @@ This plugin is perfect for blogs, e-commerce sites, or any WordPress site that c
 == Frequently Asked Questions ==
 
 = What does Hintr do? =
-Hintr allows you to configure the post types and metadata used for generating search suggestions.
+Hintr enhances your search input by adding a dynamic list of suggestions. You can configure it to retrieve suggestions from specific post types and target keywords within selected metadata fields.
 
 = Can I use this plugin with custom post types? =
 Yes! Hintr works with any public custom post type registered on your site.
 
 = Do I need to code anything? =
-No coding is required. All configurations can be done via the plugin's settings page.
+- No coding required when using the global settings for effortless setup.
+- Fine-tune search suggestions for multiple search inputs with a basic understanding of:
+  - Writing a JSON string.
+  - Using HTML data attributes.
 
 = Will this plugin slow down my site? =
-No. Hintr is designed to be lightweight and optimized for performance.
+Normally, Hintr operates swiftly; however, the speed and performance can be influenced by the number of posts being searched.
 
 == Changelog ==
 
