@@ -1,28 +1,43 @@
 window.hintr = {}
 
 window.hintr.init = function() {
-  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
+  const inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
 
   inputs.forEach(input => {
-    let element = document.createElement('ul')
-    let rect = input.getBoundingClientRect()
+    const element = document.createElement('ul')
 
     element.classList.add('hintr')
-    element.style.top = rect.top + input.offsetHeight + window.scrollY + 'px'
-    element.style.left = rect.left + 'px'
-    element.style.width = input.offsetWidth + 'px'
 
     input.parentNode.insertBefore(element, input.nextSibling)
   })
+
+  window.hintr.updatePosition()
 }
+
+window.hintr.updatePosition = function () {
+  const inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
+
+  inputs.forEach(input => {
+    const rect = input.getBoundingClientRect()
+    const parent = input.parentElement
+    const list = parent.querySelector('.hintr')
+
+    if (list) {
+      list.style.top = `${rect.top + input.offsetHeight}px`
+      list.style.left = `${rect.left}px`
+      list.style.width = `${rect.width}px`
+    }
+  })
+}
+
 
 window.hintr.createLocalStorage = async () => {
   const endpoint = '/wp-json/hintr/v1/posts'
   const perPage = 100
+  const page = 1
+  const totalPages = 1
 
-  let page = 1
   let posts = []
-  let totalPages = 1
 
   const hashData = (data) => {
     return new TextEncoder()
@@ -74,15 +89,17 @@ window.hintr.toggleSuggestions = function(e) {
 
   clearTimeout(window.hintr.toggleSuggestions.timer)
 
-  let input = e.currentTarget
+  const input = e.currentTarget
 
   window.hintr.toggleSuggestions.timer = setTimeout(() => {
-    let suggestions = input.nextElementSibling
-    let settings = hintrSettings
-    let settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false
+    const suggestions = input.nextElementSibling
+    const settings = hintrSettings
+    const settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false
     let postTypes = Object.keys(settings.search_in)
 
     if (input.value.length > 2) {
+      const cachedPosts = localStorage.getItem('hintr')
+
       if (!suggestions.classList.contains('show')) {
         suggestions.classList.add('show')
       }
@@ -91,16 +108,16 @@ window.hintr.toggleSuggestions = function(e) {
         postTypes = Object.keys(settingsOverride.search_in)
       }
 
-      const cachedPosts = localStorage.getItem('hintr')
-
       if (cachedPosts) {
         let posts = JSON.parse(cachedPosts)
 
         posts = posts.filter(function (item) {
+          
+          const keyword = input.value.toLowerCase()
+          const title = item.title.toLowerCase()
+          const metadata = item.metadata
+
           let condition = []
-          let keyword = input.value.toLowerCase()
-          let title = item.title.toLowerCase()
-          let metadata = item.metadata
 
           if (!postTypes.includes(item.type)) {
             return false
@@ -140,15 +157,8 @@ window.hintr.toggleSuggestions = function(e) {
   }, 300)
 }
 
-window.hintr.hideSuggestions = function(e) {
-  let input = e.currentTarget
-  let list = input.nextElementSibling
-
-  list.classList.remove('show')
-}
-
 window.hintr.eventListeners = function() {
-  let inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
+  const inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
 
   inputs.forEach(input => {
     input.addEventListener('keyup', window.hintr.toggleSuggestions)
@@ -159,13 +169,18 @@ window.hintr.eventListeners = function() {
       }
     })
   })
+
+  window.addEventListener('scroll', window.hintr.updatePosition)
+  window.addEventListener('resize', window.hintr.updatePosition)
 }
 
 document.addEventListener('DOMContentLoaded', function() {
 
   (async () => {
     const posts = await window.hintr.createLocalStorage()
-    console.log('search_in:', posts)
+    if (posts) {
+      window.hintr.updatePosition()
+    }
   })()
 
   window.hintr.init()
