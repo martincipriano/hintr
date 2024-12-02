@@ -28,6 +28,10 @@ class Hintr_Admin {
 
   public function enqueue_scripts() : void
   {
+    if (get_current_screen()->id !== 'settings_page_hintr') {
+      return;
+    }
+
     $css_path = $this->plugin_path . 'assets/css/hintr-admin.css';
     $css_version = file_exists($css_path) ? filemtime($css_path) : '1.0.0';
 
@@ -56,8 +60,7 @@ class Hintr_Admin {
       return [];
     }
 
-    $query = $wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type);
-    return $wpdb->get_col($query);
+    return $wpdb->get_col($wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type));
   }
 }
 
