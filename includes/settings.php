@@ -60,7 +60,7 @@ class Hintr_Settings extends Hintr_Admin {
   {
     ?>
     <div class="wrap">
-      <h1><?= esc_html_e('Hintr Options', 'hintr'); ?></h1>
+      <h1><?php echo esc_html_e('Hintr Options', 'hintr'); ?></h1>
       <form action="options.php" method="post">
         <?php
           settings_fields('hintr_settings');
@@ -85,12 +85,12 @@ class Hintr_Settings extends Hintr_Admin {
     <div class="hintr-form-group">
       <select class="hintr-select" id="hintr-post-types" name="hintr_settings[post_types][]" multiple>
         <?php foreach ($public_post_types as $post_type): ?>
-          <option value="<?= esc_attr($post_type->name) ?>" <?php selected(in_array($post_type->name, $selected_post_types), true); ?>>
-            <?= esc_html($post_type->label) ?>
+          <option value="<?php echo esc_attr($post_type->name) ?>" <?php selected(in_array($post_type->name, $selected_post_types), true); ?>>
+            <?php echo esc_html($post_type->label) ?>
           </option>
         <?php endforeach; ?>
       </select>
-      <p class="description"><?= esc_html($args['description']) ?></p>
+      <p class="description"><?php echo esc_html($args['description']) ?></p>
     </div>
   <?php }
 
@@ -108,11 +108,11 @@ class Hintr_Settings extends Hintr_Admin {
 
         <?php if ($meta_keys): ?>
           <div class="hintr-form-group">
-            <label for="<?= esc_attr($input_id) ?>"><?= esc_html($post_type_object->label) ?></label>
-            <select class="hintr-select" id="<?= esc_attr($input_id) ?>" name="hintr_settings[meta_keys][<?= esc_attr($post_type) ?>][]" multiple>
+            <label for="<?php echo esc_attr($input_id) ?>"><?php echo esc_html($post_type_object->label) ?></label>
+            <select class="hintr-select" id="<?php echo esc_attr($input_id) ?>" name="hintr_settings[meta_keys][<?php echo esc_attr($post_type) ?>][]" multiple>
               <?php foreach ($meta_keys as $meta_key): ?>
-                <option value="<?= esc_attr($meta_key) ?>" <?php selected(in_array($meta_key, $selected_meta_keys), true); ?>>
-                  <?= esc_html($meta_key) ?>
+                <option value="<?php echo esc_attr($meta_key) ?>" <?php selected(in_array($meta_key, $selected_meta_keys), true); ?>>
+                  <?php echo esc_html($meta_key) ?>
                 </option>
               <?php endforeach; ?>
             </select>
