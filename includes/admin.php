@@ -45,7 +45,7 @@ class Hintr_Admin {
     wp_enqueue_script('hintr-admin', $this->plugin_url . 'assets/js/hintr-admin.js', ['slim-select'], $js_version, true);
   }
 
-  protected function activate() : void
+  public function activate() : void
   {
     update_option('hintr_settings', $this->initial_plugin_settings);
   }
