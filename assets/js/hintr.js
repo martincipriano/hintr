@@ -32,13 +32,12 @@ window.hintr.updatePosition = function () {
 
 
 window.hintr.createLocalStorage = async () => {
-  const endpoint = '/wp-json/hintr/v1/posts'
+  const endpoint = 'http://localhost:10004/wp-json/hintr/v1/posts'
   const perPage = 100
-  const page = 1
-  const totalPages = 1
+  let page = 1
+  let totalPages = 1
 
   let posts = []
-
   const hashData = (data) => {
     return new TextEncoder()
       .encode(JSON.stringify(data))
@@ -59,6 +58,8 @@ window.hintr.createLocalStorage = async () => {
 
   try {
     do {
+      console.log('Fetching posts...')
+
       const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
       const data = await response.json()
 
@@ -78,7 +79,7 @@ window.hintr.createLocalStorage = async () => {
     return posts
 
   } catch (error) {
-    return null
+    return error
   }
 }
 
@@ -177,9 +178,10 @@ window.hintr.eventListeners = function() {
 document.addEventListener('DOMContentLoaded', function() {
 
   (async () => {
-    const posts = await window.hintr.createLocalStorage()
+    let posts = await window.hintr.createLocalStorage()
     if (posts) {
       window.hintr.updatePosition()
+      console.log('Search In:', posts)
     }
   })()
 
