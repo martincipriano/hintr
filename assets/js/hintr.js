@@ -32,12 +32,14 @@ window.hintr.updatePosition = function () {
 
 
 window.hintr.createLocalStorage = async () => {
-  const endpoint = 'http://localhost:10004/wp-json/hintr/v1/posts'
+  const root = window.location.origin
+  const endpoint = root + '/wp-json/hintr/v1/posts'
   const perPage = 100
+
   let page = 1
   let totalPages = 1
-
   let posts = []
+
   const hashData = (data) => {
     return new TextEncoder()
       .encode(JSON.stringify(data))
