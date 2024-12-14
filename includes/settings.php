@@ -131,7 +131,7 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function count_field($args) : void
   {
-    $count = $this->plugin_settings['count']; ?>
+    $count = $this->plugin_settings['count'] ?? 10; ?>
 
     <div class="hintr-form-group">
       <input type="number" class="hintr-input" id="hintr-count" name="hintr_settings[count]" value="<?php echo esc_attr($count) ?>">
