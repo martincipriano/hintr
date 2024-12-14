@@ -13,12 +13,12 @@ Enhance your WordPress site's search functionality by offering search suggestion
 == Description ==
 
 **Hintr** is a WordPress plugin designed to improve search by providing lightning-fast suggestions.
-Easily configure what post types to search in. Aside from searching the keyword from the post title, configure to search the keyword in specific post metadata like price, sku, serial number, etc.
+Easily configure which post types to search in. You can also customize it to search for keywords within specific post metadata like price, SKU, serial number, etc.
 
 **Features:**
-- Select the post type to source suggestions effortlessly.
-- Refine search suggestions by targeting keywords within a post's metadata.
-- Customize behavior for different search input fields using data attributes.
+- Effortlessly select which post types should provide search suggestions.
+- Refine search suggestions by targeting specific metadata fields.
+- Customize search behavior for different input fields via data attributes.
 - Lightweight and highly configurable, ensuring seamless integration.
 
 This plugin is perfect for blogs, e-commerce sites, or any WordPress site that can benefit from enhanced search capabilities.
@@ -26,9 +26,8 @@ This plugin is perfect for blogs, e-commerce sites, or any WordPress site that c
 == Installation ==
 
 1. Download the plugin file and extract it.
-2. Upload the `hintr` folder to the `/wp-content/plugins/` directory.
-3. Activate the plugin through the 'Plugins' screen in WordPress.
-4. Go to **Settings > Hintr** to configure the plugin options.
+2. Activate the plugin through the 'Plugins' screen in WordPress.
+3. Go to **Settings > Hintr** to configure the plugin options.
 
 == Frequently Asked Questions ==
 
@@ -40,24 +39,29 @@ Yes! Hintr works with any public custom post type registered on your site.
 
 = Do I need to code anything? =
 - No coding required when using the global settings for effortless setup.
-- Fine-tune search suggestions for multiple search inputs with a basic understanding of:
+- Fine-tune search suggestions for multiple search inputs with basic knowledge of:
   - Writing a JSON string.
   - Using HTML data attributes.
 
 = Will this plugin slow down my site? =
-Normally, Hintr operates swiftly; however, the speed and performance can be influenced by the number of posts being searched.
+Hintr is optimized for speed, but performance can be affected by the number of posts being searched.
 
 == Changelog ==
 
 = 1.0.0 =
-* Initial release.
-* Added settings page to configure post types and metadata.
-* Support for public post types and meta fields.
+* Added: Admin settings page for selecting post types and metadata.
+* Added: REST API endpoint based on selected settings.
+* Added: JavaScript to store posts in the browser's local storage.
+* Added: JavaScript to show search suggestions in a dropdown.
+
+= 1.1.0 =
+* Added: Count limit field in settings page.
+* Added: JavaScript to limit the number of suggestions displayed in the dropdown.
 
 == Upgrade Notice ==
 
-= 1.0.0 =
-First release—no upgrades necessary yet.
+= 1.1.0 =
+* Added a count limit for dropdown suggestions to improve performance.
 
 == License ==
 
