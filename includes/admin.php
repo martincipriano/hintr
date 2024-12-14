@@ -61,7 +61,25 @@ class Hintr_Admin {
       return [];
     }
 
-    return $wpdb->get_col($wpdb->prepare("SELECT DISTINCT pm.meta_key FROM {$wpdb->postmeta} pm INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID WHERE p.post_type = %s", $post_type));
+    $cache_key = "{$post_type}_meta_keys";
+    $cached_meta_keys = wp_cache_get($cache_key, 'hintr');
+
+    if ($cached_meta_keys !== false) {
+      return $cached_meta_keys;
+    }
+
+    $query = $wpdb->prepare(
+      "SELECT DISTINCT pm.meta_key
+      FROM {$wpdb->postmeta} pm
+      INNER JOIN {$wpdb->posts} p ON pm.post_id = p.ID
+      WHERE p.post_type = %s",
+      $post_type
+    );
+
+    $meta_keys = $wpdb->get_col($query);
+    wp_cache_set($cache_key, $meta_keys, 'hintr', HOUR_IN_SECONDS);
+
+    return $meta_keys;
   }
 }
 
