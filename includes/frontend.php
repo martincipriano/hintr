@@ -48,7 +48,7 @@ class Hintr {
   public function get_posts(WP_REST_Request $request) {
     $settings = $this->plugin_settings;
     $post_type = array_keys($settings['search_in']);
-    $per_page  = max(1, min(100, intval($request->get_param('per_page') ?? 100)));
+    $per_page  = max(1, min(100, intval($request->get_param('per_page') ?? 50)));
     $page      = max(1, intval($request->get_param('page') ?? 1));
 
     $query = new \WP_Query([
