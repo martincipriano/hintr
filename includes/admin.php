@@ -16,6 +16,7 @@ class Hintr_Admin {
     $this->plugin_path = plugin_dir_path(dirname(__FILE__));
     $this->plugin_settings = get_option('hintr_settings');
     $this->initial_plugin_settings = [
+      'count' => 10,
       'search_in' => [
         'post' => [],
         'page' => []
