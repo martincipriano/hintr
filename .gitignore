@@ -31,3 +31,12 @@ $RECYCLE.BIN/
 .fseventsd
 .Spotlight-V100
 .Trashes
+
+# Ignore compressed files
+*.zip
+*.rar
+*.gz
+*.bz2
+*.7z
+*.dmg
+*.iso
