@@ -1,4 +1,4 @@
-=== Hintr - Lightning Fast Search Suggestions ===
+=== Hintr ===
 Contributors: martincipriano
 Tags: search, suggestion
 Requires at least: 5.5

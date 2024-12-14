@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Hintr - Lightning Fast Search Suggestions
+ * Plugin Name: Hintr
  * Description: A plugin that enhances WordPress search by providing a dropdown of search suggestions with minimal loading time for improved user experience.
  * Author: Jose Martin Cipriano
  * Version: 1.1.0
