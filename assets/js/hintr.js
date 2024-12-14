@@ -30,7 +30,6 @@ window.hintr.updatePosition = function () {
   })
 }
 
-
 window.hintr.createLocalStorage = async () => {
   const root = window.location.origin
   const endpoint = root + '/wp-json/hintr/v1/posts'
