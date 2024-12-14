@@ -114,11 +114,9 @@ window.hintr.toggleSuggestions = function(e) {
         let posts = JSON.parse(cachedPosts)
 
         posts = posts.filter(function (item) {
-          
           const keyword = input.value.toLowerCase()
           const title = item.title.toLowerCase()
           const metadata = item.metadata
-
           let condition = []
 
           if (!postTypes.includes(item.type)) {
@@ -145,11 +143,14 @@ window.hintr.toggleSuggestions = function(e) {
         })
 
         suggestions.innerHTML = ''
-        posts.forEach(item => {
-          suggestions.innerHTML += hintrSettings.hint
-            .replace('title', item.title)
-            .replace('url', item.url)
-        })
+
+        posts
+          .slice(0, settings.count)
+          .forEach(item => {
+            suggestions.innerHTML += hintrSettings.hint
+              .replace('title', item.title)
+              .replace('url', item.url)
+          })
       } else {
         console.error('No posts found in localStorage')
       }
