@@ -5,7 +5,7 @@ Tags: search, suggestion
 Requires at least: 5.5
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -64,6 +64,9 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 
 = 1.1.2 =
 * Cache the database query results for getting metadata used by a post type in the settings page
+
+= 1.1.3 =
+* Added donation link and screenshots to the readme file.
 
 == Upgrade Notice ==
 

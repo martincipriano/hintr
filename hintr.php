@@ -3,7 +3,7 @@
  * Plugin Name: Hintr
  * Description: A plugin that enhances WordPress search by providing a dropdown of search suggestions with minimal loading time for improved user experience.
  * Author: Jose Martin Cipriano
- * Version: 1.1.2
+ * Version: 1.1.3
  * Author URI: https://www.linkedin.com/in/jmcipriano
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
