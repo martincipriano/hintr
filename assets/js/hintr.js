@@ -98,6 +98,7 @@ window.hintr.toggleSuggestions = function(e) {
     const settings = hintrSettings
     const settingsOverride = input.getAttribute('data-hintr') ? JSON.parse(input.getAttribute('data-hintr')) : false
     let postTypes = Object.keys(settings.search_in)
+    let count = settings.count
 
     if (input.value.length > 2) {
       const cachedPosts = localStorage.getItem('hintr')
@@ -108,6 +109,7 @@ window.hintr.toggleSuggestions = function(e) {
 
       if (settingsOverride) {
         postTypes = Object.keys(settingsOverride.search_in)
+        count = settingsOverride.count
       }
 
       if (cachedPosts) {
@@ -145,7 +147,7 @@ window.hintr.toggleSuggestions = function(e) {
         suggestions.innerHTML = ''
 
         posts
-          .slice(0, settings.count)
+          .slice(0, count)
           .forEach(item => {
             suggestions.innerHTML += hintrSettings.hint
               .replace('title', item.title)
