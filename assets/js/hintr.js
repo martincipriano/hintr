@@ -59,14 +59,16 @@ window.hintr.createLocalStorage = async () => {
 
   try {
     do {
-      console.log('Fetching posts...')
-
+      console.log('Hintr fetching...')
       const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
       const data = await response.json()
 
       if (response.ok) {
         posts = posts.concat(data.posts)
         totalPages = data.total_pages
+
+        localStorage.setItem('hintr', JSON.stringify(posts))
+        localStorage.setItem('hintrHash', hashData(posts))
       } else {
         break
       }
@@ -74,12 +76,10 @@ window.hintr.createLocalStorage = async () => {
       page++
     } while (page <= totalPages)
 
-    localStorage.setItem('hintr', JSON.stringify(posts))
-    localStorage.setItem('hintrHash', hashData(posts))
-
     return posts
 
   } catch (error) {
+    console.error('Error fetching posts:', error)
     return error
   }
 }
@@ -177,7 +177,6 @@ window.hintr.eventListeners = function() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-
   (async () => {
     let posts = await window.hintr.createLocalStorage()
     if (posts) {
