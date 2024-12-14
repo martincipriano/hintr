@@ -39,11 +39,11 @@
   background-color: #2271b1;
 }
 
-.hintr-form-group {
+.hintr-metadata-group {
   margin-bottom: 1rem;
 }
 .hintr-form-group .description {
-  margin-top: 1rem;
+  margin-top: .5rem;
 }
 .hintr-form-group .hintr-label,
 .hintr-form-group label {
