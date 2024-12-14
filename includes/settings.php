@@ -27,32 +27,28 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function register_settings_page() : void
   {
-    $page       = 'hintr'; // Should be the same as the slug used in add_options_page
-    $section_id = 'hintr_settings_section';
+    $page = 'hintr';
 
     $option_group         = 'hintr_settings';
     $option_name          = 'hintr_settings';
     $validation_callback  = [$this, 'validate_settings'];
-
     register_setting($option_group, $option_name, $validation_callback);
 
+    $section_id     = 'hintr_search_in';
     $section_title  = __('Search Keywords In', 'hintr');
     $section_cb     = '';
-
     add_settings_section($section_id, $section_title, $section_cb, $page);
 
     $field_id     = 'hintr_post_types';
     $field_title  = __('Post Types', 'hintr');
     $field_cb     = [$this, 'post_type_field'];
     $args         = ['description' => __('Select the default post types from which suggestions will be sourced.', 'hintr')];
-
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
 
     $field_id     = 'hintr_metadata';
     $field_title  = __('Post Metadata', 'hintr');
     $field_cb     = [$this, 'metadata_field'];
     $args         = ['description' => __('Select the default post metadata from which suggestions will be sourced.', 'hintr')];
-
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 
@@ -107,7 +103,7 @@ class Hintr_Settings extends Hintr_Admin {
         $input_id           = 'hintr-' . sanitize_key($post_type) . '-metadata'; ?>
 
         <?php if ($meta_keys): ?>
-          <div class="hintr-form-group">
+          <div class="hintr-form-group hintr-metadata-group">
             <label for="<?php echo esc_attr($input_id) ?>"><?php echo esc_html($post_type_object->label) ?></label>
             <select class="hintr-select" id="<?php echo esc_attr($input_id) ?>" name="hintr_settings[meta_keys][<?php echo esc_attr($post_type) ?>][]" multiple>
               <?php foreach ($meta_keys as $meta_key): ?>
@@ -126,6 +122,7 @@ class Hintr_Settings extends Hintr_Admin {
   {
     $post_types = $input['post_types'] ?? [];
     $meta_keys = $input['meta_keys'] ?? [];
+
     $output = [
       'search_in' => []
     ];
