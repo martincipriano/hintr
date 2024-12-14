@@ -50,6 +50,17 @@ class Hintr_Settings extends Hintr_Admin {
     $field_cb     = [$this, 'metadata_field'];
     $args         = ['description' => __('Select the default post metadata from which suggestions will be sourced.', 'hintr')];
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
+
+    $section_id     = 'hintr_other_settings';
+    $section_title  = __('Other Settings', 'hintr');
+    $section_cb     = '';
+    add_settings_section('hintr_other_settings', $section_title, $section_cb, $page);
+
+    $field_id     = 'hintr_count';
+    $field_title  = __('Suggestion Count', 'hintr');
+    $field_cb     = [$this, 'count_field'];
+    $args         = ['description' => __('The number of suggestions to display.', 'hintr')];
+    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 
   public function settings_page() : void
@@ -118,12 +129,24 @@ class Hintr_Settings extends Hintr_Admin {
     }
   }
 
+  public function count_field($args) : void
+  {
+    $count = $this->plugin_settings['count']; ?>
+
+    <div class="hintr-form-group">
+      <input type="number" class="hintr-input" id="hintr-count" name="hintr_settings[count]" value="<?php echo esc_attr($count) ?>">
+      <p class="description"><?php echo esc_html($args['description']) ?></p>
+    </div>
+  <?php }
+
   public function validate_settings($input) : array
   {
     $post_types = $input['post_types'] ?? [];
     $meta_keys = $input['meta_keys'] ?? [];
+    $count = $input['count'] ?? 10;
 
     $output = [
+      'count' => $count,
       'search_in' => []
     ];
 
