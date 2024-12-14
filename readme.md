@@ -1,5 +1,6 @@
 === Hintr ===
 Contributors: martincipriano
+Donate link: https://www.paypal.me/martincipriano
 Tags: search, suggestion
 Requires at least: 5.5
 Tested up to: 6.7
@@ -58,6 +59,12 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 * Added: Count limit field in settings page.
 * Added: JavaScript to limit the number of suggestions displayed in the dropdown.
 
+= 1.1.1 =
+* Apply fixes for text domain mismatch required by WordPress
+
+= 1.1.2 =
+* Cache the database query results for getting metadata used by a post type in the settings page
+
 == Upgrade Notice ==
 
 = 1.1.0 =
@@ -67,3 +74,13 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 
 This plugin is licensed under the GNU General Public License v2.0 or later.  
 You may obtain a copy of the license at: https://www.gnu.org/licenses/gpl-2.0.html
+
+== Screenshots ==
+1. ![Screenshot 1](assets/screenshot-1.png)
+  *Description: Displays post suggestions pulled from the selected post types.*
+
+2. ![Screenshot 2](assets/screenshot-2.png)
+  *Description: Displays post suggestions if the keyword partially matches its metadata*
+
+3. ![Screenshot 3](assets/screenshot-3.png)
+  *Description: Searching for "capacitor" will display posts with the keyword in their title. Searching "electronics" will show posts where the keyword is present in the metadata.*
