@@ -115,7 +115,7 @@ You may obtain a copy of the license at: [GNU GPL v2.0](https://www.gnu.org/lice
 
 ## Screenshots
 
-1. ![Screenshot 1](assets/screenshot-1.png?raw=true "Post type settings")
+1. ![Screenshot 1](https://github.com/martincipriano/hintr/blob/master/assets/screenshot-1.jpg?raw=true "Post type settings")
    **Description:** Displays post suggestions pulled from the selected post types.
 
 2. ![Screenshot 2](assets/screenshot-2.png?raw=true "Post metadata settings")
