@@ -69,7 +69,7 @@ Example usage:
     "page": ["meta_key_1", "meta_key_2", "meta_key_3"]
   }
 }'>
-
+```
 
 ### Will this plugin slow down my site?
 Hintr is optimized for speed, but performance can be affected by the number of posts being searched.
