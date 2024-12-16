@@ -115,12 +115,12 @@ You may obtain a copy of the license at: [GNU GPL v2.0](https://www.gnu.org/lice
 
 ## Screenshots
 
-1. ![Screenshot 1](assets/screenshot-1.png?raw=true "Post type settings")
+1. ![Screenshot 1](https://github.com/martincipriano/hintr/blob/master/assets/screenshot-1.jpg?raw=true "Post type settings")
    **Description:** Displays post suggestions pulled from the selected post types.
 
-2. ![Screenshot 2](assets/screenshot-2.png?raw=true "Post metadata settings")
+2. ![Screenshot 2](https://github.com/martincipriano/hintr/blob/master/assets/screenshot-2.jpg?raw=true "Post metadata settings")
    **Description:** Displays post suggestions if the keyword partially matches its metadata.
 
-3. ![Screenshot 3](assets/screenshot-3.png?raw=true "Search suggestions")
+3. ![Screenshot 3](https://github.com/martincipriano/hintr/blob/master/assets/screenshot-3.jpg?raw=true "Search suggestions")
    **Description:** Searching for "capacitor" will display posts with the keyword in their title.
    Searching "electronics" will show posts where the keyword is present in the metadata.
