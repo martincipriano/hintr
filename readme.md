@@ -1,13 +1,13 @@
 # Hintr
 
-**Contributors:** martincipriano
-**Donate Link:** [Support via PayPal](https://www.paypal.me/martincipriano)
-**Tags:** search, suggestion
-**Requires at least:** 5.5
-**Tested up to:** 6.7
-**Requires PHP:** 7.4
-**Stable tag:** 1.1.3
-**License:** GPLv2 or later
+**Contributors:** martincipriano  
+**Donate Link:** [Support via PayPal](https://www.paypal.me/martincipriano)  
+**Tags:** search, suggestion  
+**Requires at least:** 5.5  
+**Tested up to:** 6.7  
+**Requires PHP:** 7.4  
+**Stable tag:** 1.1.3  
+**License:** GPLv2 or later  
 **License URI:** [GNU GPL v2.0](https://www.gnu.org/licenses/gpl-2.0.html)
 
 Enhance your WordPress site's search functionality by offering search suggestions sourced from selected post types and metadata.
