@@ -37,8 +37,9 @@ This plugin is perfect for blogs, e-commerce sites, or any WordPress site that c
 ---
 
 ## Usage
-- Search suggestions will automatically be applied to text inputs with the data attribute name="s" or
-- add the data attribute data-hintr to a text input. Override the settings by adding a json formatted settings value to the data-hintr attribute.
+- Automatic Application: Search suggestions are automatically applied to text inputs with the data attribute name="s".
+- Custom Implementation: To customize behavior, add the data-hintr attribute to a text input.
+  - Override the default settings by assigning a JSON-formatted settings value to the data-hintr attribute.
 
 ---
 

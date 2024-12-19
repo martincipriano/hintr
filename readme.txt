@@ -29,6 +29,11 @@ This plugin is perfect for blogs, e-commerce sites, or any WordPress site that c
 2. Activate the plugin through the 'Plugins' screen in WordPress.
 3. Go to **Settings > Hintr** to configure the plugin options.
 
+== Usage ==
+- Automatic Application: Search suggestions are automatically applied to text inputs with the data attribute name="s".
+- Custom Implementation: To customize behavior, add the data-hintr attribute to a text input.
+  -Override the default settings by assigning a JSON-formatted settings value to the data-hintr attribute.
+
 == Frequently Asked Questions ==
 
 = What does Hintr do? =
