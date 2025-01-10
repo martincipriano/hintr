@@ -45,6 +45,19 @@ class Hintr {
     ]);
   }
 
+  private function flatten_array($array): array
+  {
+    $result = [];
+    foreach ($array as $value) {
+      if (is_array($value)) {
+        $result = array_merge($result, $this->flatten_array($value));
+      } else {
+        $result[] = $value;
+      }
+    }
+    return $result;
+  }
+
   public function get_posts(WP_REST_Request $request) {
     $settings = $this->plugin_settings;
     $post_type = array_keys($settings['search_in']);
@@ -67,7 +80,9 @@ class Hintr {
       $metadata = [];
       if (isset($settings['search_in'][get_post_type()])) {
         foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
-          $metadata[$meta_key] = implode(', ', array_map('esc_html', get_post_meta(get_the_ID(), $meta_key, false)));
+          $meta_value = get_post_meta(get_the_ID(), $meta_key, false);
+          $meta_value = $this->flatten_array($meta_value);
+          $metadata[$meta_key] = implode(', ', $meta_value);
         }
       }
 
