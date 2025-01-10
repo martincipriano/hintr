@@ -100,7 +100,7 @@ window.hintr.toggleSuggestions = function(e) {
     let postTypes = Object.keys(settings.search_in)
     let count = settings.count
 
-    if (input.value.length > 2) {
+    if (input.value.length > 1) {
       const cachedPosts = localStorage.getItem('hintr')
 
       if (!suggestions.classList.contains('show')) {
