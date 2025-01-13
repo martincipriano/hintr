@@ -1,4 +1,4 @@
-# Hintr
+# Hintr - Lightning-Fast Advanced Search Suggestions
 
 **Hintr** is a WordPress plugin designed to improve search by providing lightning-fast suggestions. Easily configure which post types to pull search suggestions from. You can also show suggestions if the search keyword is found in a post's metadata, such as price, SKU, serial number, etc.
 
