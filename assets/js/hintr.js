@@ -53,13 +53,15 @@ window.hintr.createLocalStorage = async () => {
     const newHash = hashData(cachedData)
 
     if (cachedHash == newHash) {
+      console.log('Serving suggestions from local storage...')
       return cachedData
     }
   }
 
   try {
     do {
-      console.log('Hintr fetching...')
+      console.log('Fetching posts for suggestions...')
+
       const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
       const data = await response.json()
 
@@ -184,7 +186,6 @@ document.addEventListener('DOMContentLoaded', function() {
     let posts = await window.hintr.createLocalStorage()
     if (posts) {
       window.hintr.updatePosition()
-      console.log('Search In:', posts)
     }
   })()
 
