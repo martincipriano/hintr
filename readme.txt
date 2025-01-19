@@ -2,9 +2,7 @@
 Contributors: martincipriano
 Donate link: https://www.paypal.me/martincipriano
 Tags: search, suggestion
-Requires at least: 5.5
 Tested up to: 6.7
-Requires PHP: 7.4
 Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -96,9 +94,10 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 
 = 1.1.4 =
 * Added: Add a suggestion count to improve performance and prevent showing too many suggestions.
+* Added: Added a script to prevent access to the main plugin file.
 * Updated: assets/js/hintr.js to replace the use of hashed post. Instead check when the local storage was last updated before updating the local storage.
-* Updated: Updated slimselect.js to use the uinminified version
-* Deleted: Remove load_plugin_textdomain() since it is not being used since WordPress 4.6
+* Updated: Updated slimselect.js to use the uinminified version.
+* Deleted: Remove load_plugin_textdomain() since it is not being used since WordPress 4.6.
 
 == Upgrade Notice ==
 
