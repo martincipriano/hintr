@@ -12,6 +12,8 @@ class Hintr_Settings extends Hintr_Admin {
     parent::__construct();
     add_action('admin_menu', [$this, 'create_settings_page']);
     add_action('admin_init', [$this, 'register_settings_page']);
+    add_action('admin_init', [$this, 'after_settings_saved']);
+    add_action('save_post', [$this, 'after_settings_saved'], 10, 2);
   }
 
   public function create_settings_page() : void
@@ -165,6 +167,24 @@ class Hintr_Settings extends Hintr_Admin {
     }
 
     return $output;
+  }
+
+  public function after_settings_saved() : void
+  {
+    if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
+      update_option('hintr_last_updated', time());
+    }
+  }
+
+  public function after_post_saved($post_id, $post) : void
+  {
+    $selected_post_types = array_keys($this->plugin_settings['search_in'] ?? []);
+    if (
+      (!wp_is_post_revision($post_id) && !wp_is_post_autosave($post_id)) &&
+      in_array($post->post_type, $selected_post_types)
+    ) {
+      update_option('hintr_last_updated', time());
+    }
   }
 }
 
