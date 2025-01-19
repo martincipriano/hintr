@@ -32,6 +32,7 @@ class Hintr {
 
     wp_localize_script('hintr', 'hintrSettings', array_merge([
       'hint' => '<li><a class="hint" href="url">title</a></li>',
+      'last_updated' => get_option('hintr_last_updated'),
       'ajax_url' => admin_url('admin-ajax.php')
     ], $this->plugin_settings));
   }
