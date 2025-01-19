@@ -52,7 +52,7 @@ window.hintr.createLocalStorage = async () => {
     const cachedHash = localStorage.getItem('hintrHash')
     const newHash = hashData(cachedData)
 
-    if (cachedHash === newHash) {
+    if (cachedHash == newHash) {
       return cachedData
     }
   }
