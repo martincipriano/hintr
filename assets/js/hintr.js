@@ -39,20 +39,11 @@ window.hintr.createLocalStorage = async () => {
   let totalPages = 1
   let posts = []
 
-  const hashData = (data) => {
-    return new TextEncoder()
-      .encode(JSON.stringify(data))
-      .reduce((hash, byte) => (hash = ((hash << 5) - hash + byte) | 0), 0)
-  }
-
   const cachedPosts = localStorage.getItem('hintr')
 
   if (cachedPosts) {
     const cachedData = JSON.parse(cachedPosts)
-    const cachedHash = localStorage.getItem('hintrHash')
-    const newHash = hashData(cachedData)
-
-    if (cachedHash == newHash) {
+    if (hintrSettings.last_updated == localStorage.getItem('hintrLastUpdated')) {
       console.log('Serving suggestions from local storage...')
       return cachedData
     }
@@ -60,8 +51,6 @@ window.hintr.createLocalStorage = async () => {
 
   try {
     do {
-      console.log('Fetching posts for suggestions...')
-
       const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
       const data = await response.json()
 
@@ -70,13 +59,15 @@ window.hintr.createLocalStorage = async () => {
         totalPages = data.total_pages
 
         localStorage.setItem('hintr', JSON.stringify(posts))
-        localStorage.setItem('hintrHash', hashData(posts))
+        localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated)
       } else {
         break
       }
 
       page++
     } while (page <= totalPages)
+
+    console.log('Saving suggetions to local storage...')
 
     return posts
 
