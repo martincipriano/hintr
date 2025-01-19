@@ -13,7 +13,7 @@ class Hintr_Settings extends Hintr_Admin {
     add_action('admin_menu', [$this, 'create_settings_page']);
     add_action('admin_init', [$this, 'register_settings_page']);
     add_action('admin_init', [$this, 'after_settings_saved']);
-    add_action('save_post', [$this, 'after_settings_saved'], 10, 2);
+    add_action('save_post', [$this, 'after_post_saved'], 10, 2);
   }
 
   public function create_settings_page() : void
