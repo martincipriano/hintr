@@ -8,7 +8,6 @@ class Hintr_Settings extends Hintr_Admin {
 
   public function __construct()
   {
-    load_plugin_textdomain('hintr', false, dirname(plugin_basename(dirname(__FILE__))) . '/languages');
     parent::__construct();
     add_action('admin_menu', [$this, 'create_settings_page']);
     add_action('admin_init', [$this, 'register_settings_page']);
