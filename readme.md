@@ -90,7 +90,7 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 
 ### 1.1.4
 - **Added:** Add a suggestion count to improve performance and prevent showing too many suggestions.
-- **Updated:** assets/js/hintr.js to replace the comparison operator between the hashed values since it always return false and doesn't save to the local storage causing performance issues.
+- **Updated:** assets/js/hintr.js to replace the use of hashed post. Instead check when the local storage was last updated before updating the local storage.
 - **Updated:** Updated slimselect.js to use the uinminified version
 
 ---
@@ -98,7 +98,7 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 ## Upgrade Notice
 
 ### 1.1.4
-**Bugfix: Replace the comparison operator between the hashed values to fix performance issues.**
+**Update: Store when the settings and posts were last updated. Compare it to when the local storage was last updated before updating the local storage instead of hashing the entire json posts.**
 
 ---
 
