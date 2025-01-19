@@ -8,6 +8,9 @@
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
+if (!defined('ABSPATH')) {
+  exit;
+}
 
 include_once plugin_dir_path(__FILE__) . 'includes/frontend.php';
 include_once plugin_dir_path(__FILE__) . 'includes/admin.php';
