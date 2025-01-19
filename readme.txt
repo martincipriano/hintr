@@ -5,7 +5,7 @@ Tags: search, suggestion
 Requires at least: 5.5
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.1.3
+Stable tag: 1.1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -94,10 +94,15 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 = 1.1.3 =
 * Added donation link and screenshots to the readme file.
 
+= 1.1.4 =
+* Added: Add a suggestion count to improve performance and prevent showing too many suggestions.
+* Updated: assets/js/hintr.js to replace the comparison operator between the hashed values since it always return false and doesn't save to the local storage causing performance issues.
+* Updated: Updated slimselect.js to use the uinminified version
+
 == Upgrade Notice ==
 
-= 1.1.0 =
-* Added a count limit for dropdown suggestions to improve performance.
+= 1.1.4 =
+* Bugfix: Replace the comparison operator between the hashed values to fix performance issues.
 
 == License ==
 
