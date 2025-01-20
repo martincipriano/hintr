@@ -57,9 +57,6 @@ window.hintr.createLocalStorage = async () => {
       if (response.ok) {
         posts = posts.concat(data.posts)
         totalPages = data.total_pages
-
-        localStorage.setItem('hintr', JSON.stringify(posts))
-        localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated)
       } else {
         break
       }
@@ -67,6 +64,8 @@ window.hintr.createLocalStorage = async () => {
       page++
     } while (page <= totalPages)
 
+    localStorage.setItem('hintr', JSON.stringify(posts))
+    localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated)
     console.log('Saving suggetions to local storage...')
 
     return posts
