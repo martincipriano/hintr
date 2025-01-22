@@ -50,6 +50,8 @@ window.hintr.createLocalStorage = async () => {
   }
 
   try {
+    console.log('Saving suggetions to local storage...')
+
     do {
       const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
       const data = await response.json()
@@ -66,7 +68,6 @@ window.hintr.createLocalStorage = async () => {
 
     localStorage.setItem('hintr', JSON.stringify(posts))
     localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated)
-    console.log('Saving suggetions to local storage...')
 
     return posts
 
