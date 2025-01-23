@@ -156,17 +156,23 @@ window.hintr.toggleSuggestions = function(e) {
 }
 
 window.hintr.eventListeners = function() {
-  const inputs = document.querySelectorAll('[type="text"][data-hintr], [type="search"][data-hintr], [name=s]')
 
-  inputs.forEach(input => {
-    input.addEventListener('keyup', window.hintr.toggleSuggestions)
+  let inputSelector = ['[type="text"][data-hintr]', '[type="search"][data-hintr]'];
 
-    document.addEventListener('click', function(e) {
-      if (input !== e.target && input.nextElementSibling !== e.target) {
-        input.nextElementSibling.classList.remove('show')
-      }
+  if (hintrSettings.auto) {
+    inputSelector.push('[name=s]')
+  }
+
+  document
+    .querySelectorAll(inputSelector.join(', '))
+    .forEach(input => {
+      input.addEventListener('keyup', window.hintr.toggleSuggestions)
+      document.addEventListener('click', function(e) {
+        if (input !== e.target && input.nextElementSibling !== e.target) {
+          input.nextElementSibling.classList.remove('show')
+        }
+      })
     })
-  })
 
   window.addEventListener('scroll', window.hintr.updatePosition)
   window.addEventListener('resize', window.hintr.updatePosition)
