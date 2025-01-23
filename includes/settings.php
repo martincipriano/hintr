@@ -64,9 +64,9 @@ class Hintr_Settings extends Hintr_Admin {
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
 
     $field_id     = 'hintr_auto';
-    $field_title  = __('Auto', 'hintr');
+    $field_title  = __('Auto Apply', 'hintr');
     $field_cb     = [$this, 'auto_field'];
-    $args         = ['description' => __('Apply suggestions to the default WordPress search input (input with attribute name="s").', 'hintr')];
+    $args         = ['description' => __('Use suggestions with the default search input.', 'hintr')];
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 
@@ -150,8 +150,9 @@ class Hintr_Settings extends Hintr_Admin {
   {
     $auto = $this->plugin_settings['auto'] ?>
     <div class="hintr-form-group">
-      <input <?php checked(($auto === 'true'), true); ?> type="checkbox" class="hintr-input" id="hintr-auto" name="hintr_settings[auto]" value="<?php echo esc_attr($auto) ?>">
-      <p class="description"><?php echo esc_html($args['description']) ?></p>
+      <input <?php checked($auto, true); ?> type="checkbox" class="hintr-input" id="hintr-auto" name="hintr_settings[auto]" value="true">
+      <?php echo esc_html($args['description']); ?>
+      <p class="description" style="max-width: 767px;"><strong>Note</strong>: Integrating auto-suggestions with animated inputs can lead to layout issues, so customizing the design of the suggestions dropdown is crucial to ensure a seamless user experience.</p>
     </div>
   <?php }
 
@@ -160,8 +161,10 @@ class Hintr_Settings extends Hintr_Admin {
     $post_types = $input['post_types'] ?? [];
     $meta_keys = $input['meta_keys'] ?? [];
     $count = $input['count'] ?? 10;
+    $auto = ($input['auto'] === 'true' ? true : false) ?? false;
 
     $output = [
+      'auto' => $auto,
       'count' => $count,
       'search_in' => []
     ];
