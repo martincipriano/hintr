@@ -3,7 +3,7 @@
  * Plugin Name: Hintr
  * Description: A plugin that enhances WordPress search by providing a dropdown of search suggestions with minimal loading time for improved user experience.
  * Author: Jose Martin Cipriano
- * Version: 1.1.5
+ * Version: 1.2.0
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author URI: https://www.linkedin.com/in/jmcipriano

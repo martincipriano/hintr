@@ -99,14 +99,14 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 * Updated: Updated slimselect.js to use the uinminified version.
 * Deleted: Remove load_plugin_textdomain() since it is not being used since WordPress 4.6.
 
-= 1.1.5 =
+= 1.2.0 =
 * Updated: Save the posts and time to local storage outside of the post loop for performance improvement.
 * Added: Added a checkbox input in the settings to allow the users to disable the suggestions from the default WordPress search.
 * Added: Added a condition in the javascript before applying the suggestions to default WordPress search inputs.
 
 == Upgrade Notice ==
 
-= 1.1.5 =
+= 1.2.0 =
 * Allowed the users to apply suggestions to default WordPress search input in the settings.
 
 == License ==
