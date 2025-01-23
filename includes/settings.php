@@ -62,6 +62,12 @@ class Hintr_Settings extends Hintr_Admin {
     $field_cb     = [$this, 'count_field'];
     $args         = ['description' => __('The number of suggestions to display.', 'hintr')];
     add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
+
+    $field_id     = 'hintr_auto';
+    $field_title  = __('Auto', 'hintr');
+    $field_cb     = [$this, 'auto_field'];
+    $args         = ['description' => __('Apply suggestions to the default WordPress search input (input with attribute name="s").', 'hintr')];
+    add_settings_field($field_id, $field_title, $field_cb, $page, $section_id, $args);
   }
 
   public function settings_page() : void
@@ -136,6 +142,15 @@ class Hintr_Settings extends Hintr_Admin {
 
     <div class="hintr-form-group">
       <input type="number" class="hintr-input" id="hintr-count" name="hintr_settings[count]" value="<?php echo esc_attr($count) ?>">
+      <p class="description"><?php echo esc_html($args['description']) ?></p>
+    </div>
+  <?php }
+
+  public function auto_field($args) : void
+  {
+    $auto = $this->plugin_settings['auto'] ?>
+    <div class="hintr-form-group">
+      <input <?php checked(($auto === 'true'), true); ?> type="checkbox" class="hintr-input" id="hintr-auto" name="hintr_settings[auto]" value="<?php echo esc_attr($auto) ?>">
       <p class="description"><?php echo esc_html($args['description']) ?></p>
     </div>
   <?php }
