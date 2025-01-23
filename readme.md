@@ -95,12 +95,15 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 - **Updated:** Updated slimselect.js to use the uinminified version.
 - **Deleted:** Remove load_plugin_textdomain() since it is not being used since WordPress 4.6.
 
+### 1.1.5
+- **Updated: Save the posts and time to local storage outside of the post loop for performance improvement.
+
 ---
 
 ## Upgrade Notice
 
-### 1.1.4
-**Update: Store when the settings and posts were last updated. Compare it to when the local storage was last updated before updating the local storage instead of hashing the entire json posts.**
+### 1.1.5
+**Updated: Save the posts and time to local storage outside of the post loop for performance improvement.**
 
 ---
 

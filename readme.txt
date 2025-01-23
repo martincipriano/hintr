@@ -3,7 +3,7 @@ Contributors: martincipriano
 Donate link: https://www.paypal.me/martincipriano
 Tags: search, suggestion
 Tested up to: 6.7
-Stable tag: 1.1.4
+Stable tag: 1.1.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,10 +99,13 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 * Updated: Updated slimselect.js to use the uinminified version.
 * Deleted: Remove load_plugin_textdomain() since it is not being used since WordPress 4.6.
 
+= 1.1.5 =
+* Updated: Save the posts and time to local storage outside of the post loop for performance improvement.
+
 == Upgrade Notice ==
 
-= 1.1.4 =
-* Bugfix: Replace the comparison operator between the hashed values to fix performance issues.
+= 1.1.5 =
+* Updated: Save the posts and time to local storage outside of the post loop for performance improvement.
 
 == License ==
 
