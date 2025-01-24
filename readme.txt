@@ -1,4 +1,4 @@
-=== Hintr ===
+=== Hintr - Lightning-Fast, Advanced Search Suggestions ===
 Contributors: martincipriano
 Donate link: https://www.paypal.me/martincipriano
 Tags: search, suggestion
