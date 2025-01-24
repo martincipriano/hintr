@@ -115,11 +115,11 @@ This plugin is licensed under the GNU General Public License v2.0 or later.
 You may obtain a copy of the license at: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Screenshots ==
-1. ![Screenshot 1](assets/screenshot-1.png)
+1. Post type field in the settings determines where to pull the suggestions from.
   *Description: Displays post suggestions pulled from the selected post types.*
 
-2. ![Screenshot 2](assets/screenshot-2.png)
-  *Description: Displays post suggestions if the keyword partially matches its metadata*
+2. Custom field key input in the settings enables search using custom field value.
+  *Description: Displays post suggestions if the keyword partially matches its custom field value*
 
-3. ![Screenshot 3](assets/screenshot-3.png)
-  *Description: Searching for "capacitor" will display posts with the keyword in their title. Searching "electronics" will show posts where the keyword is present in the metadata.*
+3. Example use case.
+  *Description: Searching for "capacitor" will display posts with the keyword in their title. Searching "electronics" will show posts where the keyword is present in the posts custom field.*
