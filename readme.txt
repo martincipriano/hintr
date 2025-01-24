@@ -30,7 +30,8 @@ This plugin is perfect for blogs, e-commerce sites, or any WordPress site that c
 == Usage ==
 - Automatic Application: Search suggestions are automatically applied to text inputs with the data attribute name="s".
 - Custom Implementation: To customize behavior, add the data-hintr attribute to a text input.
-  -Override the default settings by assigning a JSON-formatted settings value to the data-hintr attribute.
+  - Override the default settings by assigning a JSON-formatted settings value to the data-hintr attribute.
+  - Example: <input data-hintr='{"count":"10","search_in":{"post":["meta_key_1","meta_key_2","meta_key_3"],"page":["meta_key_1","meta_key_2","meta_key_3"]}}' type="text" name="s" />
 
 == Frequently Asked Questions ==
 
