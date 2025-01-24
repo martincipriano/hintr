@@ -26,6 +26,9 @@ class Hintr_Admin {
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
+    add_action('wp_head', function() {
+
+    });
   }
 
   public function enqueue_scripts() : void
@@ -49,6 +52,16 @@ class Hintr_Admin {
 
   public function activate() : void
   {
+    $upload_dir = wp_upload_dir();
+  
+    if (!is_dir($upload_dir['basedir'])) {
+      wp_die('The uploads directory does not exist. Please create it before activating the plugin.');
+    }
+
+    if (!is_writable($upload_dir['basedir'])) {
+      wp_die('The uploads directory is not writable. Please make sure it has the correct permissions before activating the plugin.');
+    }
+
     update_option('hintr_settings', $this->initial_plugin_settings);
   }
 
