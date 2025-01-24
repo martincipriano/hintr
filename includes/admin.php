@@ -19,16 +19,20 @@ class Hintr_Admin {
       'auto' => false,
       'count' => 10,
       'search_in' => [
-        'post' => [],
         'page' => []
       ]
     ];
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-    add_action('wp_head', function() {
+    add_action('wp_head', [$this, 'header_scripts']);
+  }
 
-    });
+  public function header_scripts() : void
+  {
+    $settings = $this->plugin_settings;
+    $post_type = array_keys($settings['search_in']);
+    // var_dump($post_type);
   }
 
   public function enqueue_scripts() : void
@@ -63,6 +67,8 @@ class Hintr_Admin {
     }
 
     update_option('hintr_settings', $this->initial_plugin_settings);
+
+    $this->create_json_file();
   }
 
   protected function get_meta_keys($post_type = '') : array
@@ -94,6 +100,44 @@ class Hintr_Admin {
     wp_cache_set($cache_key, $meta_keys, 'hintr', HOUR_IN_SECONDS);
 
     return $meta_keys;
+  }
+
+  protected function create_json_file($content = []) : void
+  {
+    $posts = [];
+    $upload_dir = wp_upload_dir();
+    $hintr_json = $upload_dir['basedir'] . '/hintr.json';
+    $settings = $this->plugin_settings;
+    $post_type = array_keys($settings['search_in']);
+
+    $query = new \WP_Query([
+      'post_status' => 'publish',
+      'post_type' => $post_type,
+      'fields' => 'ids',
+    ]);
+
+    while ($query->have_posts()) {
+      $query->the_post();
+
+      $metadata = [];
+      if (isset($settings['search_in'][get_post_type()])) {
+        foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
+          $meta_value = get_post_meta(get_the_ID(), $meta_key, false);
+          $meta_value = $this->flatten_array($meta_value);
+          $metadata[$meta_key] = implode(', ', $meta_value);
+        }
+      }
+
+      $posts[] = [
+        'id' => get_the_ID(),
+        'metadata' => $metadata,
+        'title' => esc_html(get_the_title()),
+        'type' => esc_html(get_post_type()),
+        'url' => esc_url(get_permalink())
+      ];
+    }
+
+    file_put_contents($hintr_json, json_encode($posts));
   }
 }
 
