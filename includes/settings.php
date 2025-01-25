@@ -190,6 +190,7 @@ class Hintr_Settings extends Hintr_Admin {
   {
     if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
       update_option('hintr_last_updated', time());
+      $this->create_json_file();
     }
   }
 
@@ -201,6 +202,7 @@ class Hintr_Settings extends Hintr_Admin {
       in_array($post->post_type, $selected_post_types)
     ) {
       update_option('hintr_last_updated', time());
+      $this->create_json_file();
     }
   }
 }
