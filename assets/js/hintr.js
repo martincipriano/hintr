@@ -31,14 +31,6 @@ window.hintr.updatePosition = function () {
 }
 
 window.hintr.createLocalStorage = async () => {
-  const root = window.location.origin
-  const endpoint = root + '/wp-json/hintr/v1/posts'
-  const perPage = 100
-
-  let page = 1
-  let totalPages = 1
-  let posts = []
-
   const cachedPosts = localStorage.getItem('hintr')
 
   if (cachedPosts) {
@@ -50,30 +42,26 @@ window.hintr.createLocalStorage = async () => {
   }
 
   try {
+    const response = await fetch(`${hintrSettings.upload_dir}/hintr.json`);
+
+    if (!response.ok) {
+      alert('Please check wp-content/hintr.json file. It seems to be missing or not accessible.')
+    }
+
+    const data = await response.json();
+
     console.log('Saving suggetions to local storage...')
 
-    do {
-      const response = await fetch(`${endpoint}?per_page=${perPage}&page=${page}`)
-      const data = await response.json()
+    localStorage.setItem('hintr', JSON.stringify(data));
+    localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated);
 
-      if (response.ok) {
-        posts = posts.concat(data.posts)
-        totalPages = data.total_pages
-      } else {
-        break
-      }
-
-      page++
-    } while (page <= totalPages)
-
-    localStorage.setItem('hintr', JSON.stringify(posts))
-    localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated)
-
-    return posts
+    return data;
 
   } catch (error) {
-    console.error('Error fetching posts:', error)
-    return error
+
+    console.error('Error fetching hintr.json:', error);
+
+    return error;
   }
 }
 
