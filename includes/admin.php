@@ -113,6 +113,7 @@ class Hintr_Admin {
     $query = new \WP_Query([
       'post_status' => 'publish',
       'post_type' => $post_type,
+      'posts_per_page' => -1,
       'fields' => 'ids',
     ]);
 
@@ -128,16 +129,29 @@ class Hintr_Admin {
         }
       }
 
-      $posts[get_the_ID()] = [
-        'title' => esc_html(get_the_title()),
-        'url' => esc_url(get_permalink())
-      ];
-      if ($metadata) {
-        $posts[get_the_ID()]['metadata'] = $metadata;
-      }
+      $posts[] = array_merge(
+        [
+          'title' => esc_html(get_the_title()),
+          'url' => esc_url(get_permalink())
+        ],
+        $metadata
+      );
     }
 
     file_put_contents($hintr_json, json_encode($posts));
+  }
+
+  private function flatten_array($array): array
+  {
+    $result = [];
+    foreach ($array as $value) {
+      if (is_array($value)) {
+        $result = array_merge($result, $this->flatten_array($value));
+      } else {
+        $result[] = $value;
+      }
+    }
+    return $result;
   }
 }
 
