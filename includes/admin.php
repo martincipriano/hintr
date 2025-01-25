@@ -102,7 +102,7 @@ class Hintr_Admin {
     return $meta_keys;
   }
 
-  protected function create_json_file($content = []) : void
+  protected function create_json_file() : void
   {
     $posts = [];
     $upload_dir = wp_upload_dir();
@@ -128,13 +128,13 @@ class Hintr_Admin {
         }
       }
 
-      $posts[] = [
-        'id' => get_the_ID(),
-        'metadata' => $metadata,
+      $posts[get_the_ID()] = [
         'title' => esc_html(get_the_title()),
-        'type' => esc_html(get_post_type()),
         'url' => esc_url(get_permalink())
       ];
+      if ($metadata) {
+        $posts[get_the_ID()]['metadata'] = $metadata;
+      }
     }
 
     file_put_contents($hintr_json, json_encode($posts));
