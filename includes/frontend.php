@@ -16,7 +16,6 @@ class Hintr {
     $this->plugin_settings = get_option('hintr_settings');
 
     add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts']);
-    add_action('rest_api_init', [$this, 'register_routes']);
   }
 
   public function enqueue_scripts() : void
@@ -31,77 +30,11 @@ class Hintr {
     wp_enqueue_script('hintr', $this->plugin_url . 'assets/js/hintr.js', [], $js_version, true);
 
     wp_localize_script('hintr', 'hintrSettings', array_merge([
+      'ajax_url' => admin_url('admin-ajax.php'),
       'hint' => '<li><a class="hint" href="url">title</a></li>',
       'last_updated' => get_option('hintr_last_updated'),
-      'ajax_url' => admin_url('admin-ajax.php')
+      'upload_dir' => wp_upload_dir()['baseurl']
     ], $this->plugin_settings));
-  }
-
-  public function register_routes() : void
-  {
-    register_rest_route('hintr/v1', '/posts', [
-      'methods'             => 'GET',
-      'callback'            => [$this, 'get_posts'],
-      'permission_callback' => '__return_true'
-    ]);
-  }
-
-  private function flatten_array($array): array
-  {
-    $result = [];
-    foreach ($array as $value) {
-      if (is_array($value)) {
-        $result = array_merge($result, $this->flatten_array($value));
-      } else {
-        $result[] = $value;
-      }
-    }
-    return $result;
-  }
-
-  public function get_posts(WP_REST_Request $request) {
-    $settings = $this->plugin_settings;
-    $post_type = array_keys($settings['search_in']);
-    $per_page  = max(1, min(100, intval($request->get_param('per_page') ?? 50)));
-    $page      = max(1, intval($request->get_param('page') ?? 1));
-
-    $query = new \WP_Query([
-      'post_status'    => 'publish',
-      'post_type'      => $post_type,
-      'posts_per_page' => (int) $per_page,
-      'paged'          => (int) $page,
-      'fields'         => 'ids',
-    ]);
-
-    $posts = [];
-
-    while ($query->have_posts()) {
-      $query->the_post();
-
-      $metadata = [];
-      if (isset($settings['search_in'][get_post_type()])) {
-        foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
-          $meta_value = get_post_meta(get_the_ID(), $meta_key, false);
-          $meta_value = $this->flatten_array($meta_value);
-          $metadata[$meta_key] = implode(', ', $meta_value);
-        }
-      }
-
-      $posts[] = [
-        'id'        => get_the_ID(),
-        'metadata'  => $metadata,
-        'title'     => esc_html(get_the_title()),
-        'type'      => esc_html(get_post_type()),
-        'url'       => esc_url(get_permalink())
-      ];
-    }
-
-    return new WP_REST_Response([
-      'posts'       => $posts,
-      'total_posts' => $query->found_posts,
-      'total_pages' => $query->max_num_pages,
-      'current_page' => (int) $page,
-    ], 200);
   }
 }
 
