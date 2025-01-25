@@ -46,6 +46,7 @@ window.hintr.createLocalStorage = async () => {
 
     if (!response.ok) {
       alert('Please check wp-content/hintr.json file. It seems to be missing or not accessible.')
+      throw new Error(`Failed to fetch hintr.json: ${response.statusText}`);
     }
 
     const data = await response.json();
