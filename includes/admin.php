@@ -129,13 +129,16 @@ class Hintr_Admin {
         }
       }
 
-      $posts[] = array_merge(
-        [
-          'title' => esc_html(get_the_title()),
-          'url' => esc_url(get_permalink())
-        ],
-        $metadata
-      );
+      $object = [
+        'title' => esc_html(get_the_title()),
+        'url' => esc_url(get_permalink()),
+        'type' => esc_html(get_post_type()),
+      ];
+      if ($metadata) {
+        $object['metadata'] = $metadata;
+      }
+
+      $posts[] = $object;
     }
 
     file_put_contents($hintr_json, json_encode($posts));
