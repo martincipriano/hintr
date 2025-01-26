@@ -3,7 +3,7 @@ Contributors: martincipriano
 Donate link: https://www.paypal.me/martincipriano
 Tags: search, suggestion
 Tested up to: 6.7
-Stable tag: 1.1.5
+Stable tag: 1.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -101,14 +101,15 @@ Hintr is optimized for speed, but performance can be affected by the number of p
 * Deleted: Remove load_plugin_textdomain() since it is not being used since WordPress 4.6.
 
 = 1.2.0 =
-* Updated: Save the posts and time to local storage outside of the post loop for performance improvement.
 * Added: Added a checkbox input in the settings to allow the users to disable the suggestions from the default WordPress search.
 * Added: Added a condition in the javascript before applying the suggestions to default WordPress search inputs.
+* Added: Save the suggestions to a json file in the uploads directory so a query to the database isn't required every time a local storage is going to be created.
+* Removed: Remove the scripts for creating a custom endpoint.
 
 == Upgrade Notice ==
 
 = 1.2.0 =
-* Allowed the users to apply suggestions to default WordPress search input in the settings.
+* Performance imporvement using a json file in the uploads directory instead of getting the posts from a custom endpoint.
 
 == License ==
 
