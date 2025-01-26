@@ -25,14 +25,6 @@ class Hintr_Admin {
 
     register_activation_hook($this->plugin_path . 'hintr.php', [$this, 'activate']);
     add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
-    add_action('wp_head', [$this, 'header_scripts']);
-  }
-
-  public function header_scripts() : void
-  {
-    $settings = $this->plugin_settings;
-    $post_type = array_keys($settings['search_in']);
-    // var_dump($post_type);
   }
 
   public function enqueue_scripts() : void
@@ -66,7 +58,9 @@ class Hintr_Admin {
       wp_die('The uploads directory is not writable. Please make sure it has the correct permissions before activating the plugin.');
     }
 
-    update_option('hintr_settings', $this->initial_plugin_settings);
+    if (!$this->plugin_settings) {
+      update_option('hintr_settings', $this->initial_plugin_settings);
+    }
 
     $this->create_json_file();
   }
