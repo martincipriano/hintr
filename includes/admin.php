@@ -104,35 +104,41 @@ class Hintr_Admin {
     $settings = $this->plugin_settings;
     $post_type = array_keys($settings['search_in']);
 
-    $query = new \WP_Query([
-      'post_status' => 'publish',
-      'post_type' => $post_type,
-      'posts_per_page' => -1,
-      'fields' => 'ids',
-    ]);
+    if ($post_type) {
+      $query = new \WP_Query([
+        'post_status' => 'publish',
+        'post_type' => $post_type,
+        'posts_per_page' => -1,
+        'fields' => 'ids',
+      ]);
 
-    while ($query->have_posts()) {
-      $query->the_post();
+      while ($query->have_posts()) {
+        $query->the_post();
+        $post_id = get_the_ID();
+        $post_type = get_post_type($post_id);
+        $post_title = get_the_title($post_id);
+        $permalink = get_permalink($post_id);
 
-      $metadata = [];
-      if (isset($settings['search_in'][get_post_type()])) {
-        foreach ( $settings['search_in'][get_post_type()] as $meta_key) {
-          $meta_value = get_post_meta(get_the_ID(), $meta_key, false);
-          $meta_value = $this->flatten_array($meta_value);
-          $metadata[$meta_key] = implode(', ', $meta_value);
+        $metadata = [];
+        if (isset($settings['search_in'][$post_type])) {
+          foreach ( $settings['search_in'][$post_type] as $meta_key) {
+            $meta_value = get_post_meta($post_id, $meta_key, false);
+            $meta_value = $this->flatten_array($meta_value);
+            $metadata[$meta_key] = implode(', ', $meta_value);
+          }
         }
-      }
 
-      $object = [
-        'title' => esc_html(get_the_title()),
-        'url' => esc_url(get_permalink()),
-        'type' => esc_html(get_post_type()),
-      ];
-      if ($metadata) {
-        $object['metadata'] = $metadata;
-      }
+        $object = [
+          'title' => esc_html($post_title),
+          'url' => esc_url($permalink),
+          'type' => esc_html($post_type),
+        ];
+        if ($metadata) {
+          $object['metadata'] = $metadata;
+        }
 
-      $posts[] = $object;
+        $posts[] = $object;
+      }
     }
 
     file_put_contents($hintr_json, json_encode($posts));
