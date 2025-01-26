@@ -42,6 +42,8 @@ window.hintr.createLocalStorage = async () => {
   }
 
   try {
+    console.log('Saving suggetions to local storage...')
+
     const response = await fetch(`${hintrSettings.upload_dir}/hintr.json`);
 
     if (!response.ok) {
@@ -51,10 +53,10 @@ window.hintr.createLocalStorage = async () => {
 
     const data = await response.json();
 
-    console.log('Saving suggetions to local storage...')
-
     localStorage.setItem('hintr', JSON.stringify(data));
     localStorage.setItem('hintrLastUpdated', hintrSettings.last_updated);
+
+    console.log('Suggetions saved to local storage.')
 
     return data;
 
